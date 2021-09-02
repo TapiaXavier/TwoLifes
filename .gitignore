@@ -117,3 +117,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 © 2021 GitHub, Inc.
+.idea/
