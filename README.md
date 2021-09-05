@@ -53,4 +53,27 @@ Una solicitud pendiente es una solicitud que el anunciante no ha aceptado ni rec
 
 ### Entidades 
 La entidades que interactuan dentro del proyecto son: 
-* 
+
+| Entidad | Atributos|
+| ------------- | ------------- |
+| Usuario  | Nombre, Apellido, TipoUsuario (vendedor, comprador), Correo, Contraseña |
+| Videojuego  | Nombre, Tipo de juego, Categoría de edad, Idiomas, Fecha de Lanzamiento, Sinopsis, idPlataforma |
+| Plataforma | Nombre, Descripción|
+| Anuncion |    Fecha, idVideojuego, Precio, Despcrión, idPlataforma, idUsuario |
+| Solicitud  |  idAnuncio, idUsuario, FechaSolicitada, Status, FechaRecibido  |
+
+### Tecnologías
+ - JavaScript
+ - NodeJS
+ - Express.js
+ - Nodemon
+
+### Instalación
+
+- Clonar el repositorio
+- Ejecutar los siguientes comandos en la raiz del proyecto con la terminal de Node
+
+```bash
+  npm install
+  npm start
+```
