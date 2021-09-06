@@ -36,8 +36,11 @@ Para crear una plataforma interactiva para que todo tipo de videjuegos pueden te
 - “Como administrado, quisiera tener el control de gestionar a todos los usuarios“
 
 ### Diagrama de Casos de Uso
-
-
+![alt text](https://github.com/TapiaXavier/TwoLifes/blob/main/Documentacion/DiagramaCU.png)
+<br>
+Descripción grafica de las acciones realizables por cada tipo de usuario.
+<br>
+<br>
 ### Reglas de negocio 
 
 - Para que ocurra una venta, un comprador debe indicar que le interesa un videojuego que un anunciante esté vendiendo. El anunciante debe entonces aceptar la solicitud del comprador.
