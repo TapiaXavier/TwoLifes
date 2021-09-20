@@ -118,3 +118,5 @@ dist
 .pnp.*
 © 2021 GitHub, Inc.
 .idea/
+
+config.js
