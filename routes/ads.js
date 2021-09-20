@@ -14,4 +14,4 @@ router.post('/', createAd);
 router.put('/:id', editAd);
 router.delete('/:id', deleteAd);
 
-module.exports = router
+module.exports = router;
