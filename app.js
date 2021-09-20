@@ -7,10 +7,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 const mongoose = require('mongoose');
-
-mongoose.connect(
-    config.MONGODB_URI
-)
+mongoose.connect(config.MONGODB_URI)
 mongoose.set("debug", true)
 
 app.use('/v1', require('./routes'));
