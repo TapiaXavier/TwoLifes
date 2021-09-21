@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 mongoose.connect(config.MONGODB_URI)
 mongoose.set("debug", true)
 
+require('./models/Ad');
+
 app.use('/v1', require('./routes'));
 
 const PORT = 4001
