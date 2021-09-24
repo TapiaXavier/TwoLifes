@@ -31,6 +31,9 @@ function editAd(req, res, next) {
 
         if (typeof newData.description !== 'undefined')
             ad.description = newData.description
+
+            if (typeof newData.status !== 'undefined')
+            ad.status = newData.status
         
         ad.save().then(updatedAd => {
             res.status(201).json(updatedAd.publicData())

@@ -6,16 +6,17 @@ const AdSchema = new mongoose.Schema({
     idPlatform: {type: mongoose.Schema.Types.ObjectId, ref: 'platform_col', required: true},
     price: {type: Number, min: 0, required: true},
     description: {type: String, required: true},
-    status: {enum: ['En venta', 'Vendido']}
+    status: {type: String, enum: ['En venta', 'Vendido']}
 }, {timestamps: true, collection: 'ads_col'})
 
-AdSchema.methods.publicData = () => {
+AdSchema.methods.publicData = function() {
     return {
         advertiser: this.idAdvertiser,
         videogame: this.idVideogame,
         platform: this.idPlatform,
         price: this.price,
-        description: this.description
+        description: this.description,
+        status: this.status
     }
 }
 
