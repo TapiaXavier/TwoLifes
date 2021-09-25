@@ -9,7 +9,7 @@ app.use(bodyParser.json())
 
 const mongoose = require('mongoose');
 
-mongoose.connect("mongodb+srv://admin:C28mc7iSC0BvHLjD@cluster0.tzwzo.mongodb.net/twolifes?retryWrites=true&w=majority", {
+mongoose.connect(MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
