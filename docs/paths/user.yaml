@@ -1,0 +1,70 @@
+get:
+  tags:
+    - Usuarios
+  summary: Obtener los datos de un usuario.
+  parameters:
+  - name: id
+    in: path
+    description: ID del usuario
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Usuario encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/usersPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+put:
+  tags:
+    - Usuarios
+  summary: Modificar los datos de un usuario.
+  parameters:
+  - name: id
+    in: path
+    description: ID del usuario
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Datos actualizados exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/usersPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+delete:
+  tags:
+    - Usuarios
+  summary: Eliminar un usuario.
+  parameters:
+  - name: id
+    in: path
+    description: ID del usuario
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      $ref: ../responses.yaml#/OK
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

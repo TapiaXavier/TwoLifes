@@ -11,9 +11,10 @@ const AdSchema = new mongoose.Schema({
 
 AdSchema.methods.publicData = function() {
     return {
-        advertiser: this.idAdvertiser,
-        videogame: this.idVideogame,
-        platform: this.idPlatform,
+        _id: this._id,
+        idAdvertiser: this.idAdvertiser,
+        idVideogame: this.idVideogame,
+        idPlatform: this.idPlatform,
         price: this.price,
         description: this.description,
         status: this.status

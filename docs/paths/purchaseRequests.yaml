@@ -1,0 +1,41 @@
+post:
+  tags:
+  - Solicitudes
+  summary: Crear una nueva solicitud.
+  requesBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/purchaseRequestsBody.yaml
+    required: true
+  responses:
+    200:
+      description: (OK) La solicitud fue creado exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/purchaseRequestsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+get:
+  tags:
+  - Solicitudes
+  summary: Obtener todas las solicitudes.
+  responses:
+    200:
+      description: (OK) Array de solicitudes.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/purchaseRequestsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

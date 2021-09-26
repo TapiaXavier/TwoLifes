@@ -1,0 +1,41 @@
+post:
+  tags:
+  - Videojuegos
+  summary: Crear un nuevo videojuego.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/videogamesBody.yaml
+    required: true
+  responses:
+    200: 
+      description: (OK) El videojuego fue creado exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/videogamesPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+get:
+  tags:
+  - Videojuegos
+  summary: Obtener todos los videojuegos.
+  responses:
+    200: 
+      description: (OK) Un array de videojuegos.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/videogamesPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

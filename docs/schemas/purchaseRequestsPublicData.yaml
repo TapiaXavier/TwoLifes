@@ -1,0 +1,21 @@
+type: object
+properties:
+  _id:
+    type: string
+    description: ID de la solicitud
+  idAd:
+    type: string
+    description: ID del anuncio
+  idRequester:
+    type: string
+    description: ID del solicitante
+  date:
+    type: string
+    description:
+  status:
+    type: string
+    enum: [Aceptada, Rechazada, Pendiente]
+    description: Estado de la solicitud
+  dateReceived:
+    type: string
+    description: Fecha en que se recibió el juego

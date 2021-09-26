@@ -12,6 +12,12 @@ mongoose.set("debug", true)
 
 require('./models/Ad');
 
+const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/v1', require('./routes'));
 
 const PORT = 4001

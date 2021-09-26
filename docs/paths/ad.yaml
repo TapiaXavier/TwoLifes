@@ -1,0 +1,70 @@
+get:
+  tags:
+    - Anuncios
+  summary: Obtener los datos de un anuncio.
+  parameters:
+  - name: id
+    in: path
+    description: ID del anuncio
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Anuncio encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/adsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+put:
+  tags:
+    - Anuncios
+  summary: Modificar los datos de un anuncio.
+  parameters:
+  - name: id
+    in: path
+    description: ID del anuncio
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Datos actualizados exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/adsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+delete:
+  tags:
+    - Anuncios
+  summary: Eliminar un anuncio.
+  parameters:
+  - name: id
+    in: path
+    description: ID del anuncio
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      $ref: ../responses.yaml#/OK
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
