@@ -11,3 +11,5 @@ router.get('/', getVideogames)
 router.post('/', createVideogame)
 router.put('/:id', modifyVideogame)
 router.delete('/:id', deleteVideogame)
+
+module.exports = router;

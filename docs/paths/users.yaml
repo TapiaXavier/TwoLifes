@@ -1,0 +1,41 @@
+post:
+  tags:
+  - Usuarios
+  summary: Crear un nuevo usuario.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/usersBody.yaml
+    required: true
+  responses:
+    200:
+      description: (OK) El usuario fue creado exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/usersBody.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+get:
+  tags:
+  - Usuarios
+  summary: Obtener todos los usuarios.
+  responses:
+    200:
+      description: (OK) Un array de usuarios.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/usersPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

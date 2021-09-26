@@ -1,0 +1,72 @@
+openapi: 3.0.1
+info:
+  title: TwoLifes API
+  description: API para un servicio de compra y venta de videojuegos de segunda mano.
+  version: 1.0.0
+
+servers:
+- url: https://twolifes.herokuapp.com/v1
+
+tags:
+- name: Usuarios
+  description: Endpoint para manejar la información relacionada a usuarios.
+- name: Videojuegos
+  description: Endpoint para manejar la información relacionada a videojuegos.
+- name: Anuncios
+  description: Endpoint para manejar la información relacionada a anuncios de venta.
+- name: Solicitudes
+  description: Endpoint para manejar la información relacionada a solicitudes.
+
+paths:
+  /users:
+    $ref: ./paths/users.yaml
+
+  /users/{id}:
+    $ref: ./paths/user.yaml
+
+  /videogames:
+    $ref: ./paths/videogames.yaml
+
+  /videogames/{id}:
+    $ref: ./paths/videogame.yaml
+
+  /ads:
+    $ref: ./paths/ads.yaml
+
+  /ads/{id}:
+    $ref: ./paths/ad.yaml
+
+  /purchaseRequests:
+    $ref: ./paths/purchaseRequests.yaml
+  
+  /purchaseRequests/{id}:
+    $ref: ./paths/purchaseRequest.yaml
+
+components:
+  responses:
+    $ref: ./responses.yaml
+  
+  schemas:
+    UsersBody:
+      $ref: ./schemas/usersBody.yaml
+    
+    UsersPublicData:
+      $ref: ./schemas/usersPublicData.yaml
+          
+    VideogamesBody:
+      $ref: ./schemas/videogamesBody.yaml
+        
+    VideogamesPublicData:
+      $ref: ./schemas/videogamesPublicData.yaml
+
+    AdsBody:
+      $ref: ./schemas/adsBody.yaml
+
+    AdsPublicData:
+      $ref: ./schemas/adsPublicData.yaml
+
+    PurchaseRequestsBody:
+      $ref: ./schemas/purchaseRequestsBody.yaml
+    
+    PurchaseRequestsPublicData:
+      $ref: ./schemas/purchaseRequestsPublicData.yaml

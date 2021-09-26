@@ -1,0 +1,15 @@
+type: object
+properties:
+  idAd:
+    type: string
+    description: ID del anuncio
+  idRequester:
+    type: string
+    description: ID del solicitante
+  date:
+    type: string
+    description: Fecha de la solicitud
+  status:
+    type: string
+    enum: [Aceptada, Rechazada, Pendiente]
+    description: Estado de la solicitud

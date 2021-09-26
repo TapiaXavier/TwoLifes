@@ -10,7 +10,6 @@ router.get('/', (req, res)=>{
 router.use('/users', require('./users'));
 router.use('/videogames', require('./videogames'));
 router.use('/ads', require('./ads'));
-router.use('/bids', require('./bids'));
 router.use('/purchaserequest', require('./purchaserequest'));
 
 
