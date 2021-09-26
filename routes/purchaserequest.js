@@ -14,4 +14,4 @@ router.post('/', createPurchase);
 router.put('/', editPurchase);
 router.delete('/', deletePurchase);
 
-module.exports = router()
+module.exports = router;
