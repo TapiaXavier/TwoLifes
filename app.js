@@ -1,20 +1,20 @@
-const config = require('./config')
+// Express
 const express = require('express')
 const app = express()
 
+//Body Parser
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-const mongoose = require('mongoose');
-mongoose.connect(config.MONGODB_URI)
-mongoose.set("debug", true)
-
-require('./models/Ad');
-
+require('./models/Ad')
+require('./models/User')
+require('./models/PurchaseRequest')
+require('./models/Videogame')
 app.use('/v1', require('./routes'));
 
-const PORT = 4001
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`)
-})
+
+//Server iniciation
+/*app.listen(process.env.PORT, () => {
+    console.log(`Server listening on port ${process.env.PORT}`)*/
+//})
