@@ -13,7 +13,6 @@ mongoose.set("debug", true)
 require('./models/Ad');
 
 const swaggerUi = require('swagger-ui-express');
-// const swaggerDocument = require('./swagger.json');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 
