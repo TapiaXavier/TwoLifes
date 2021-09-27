@@ -9,7 +9,6 @@ const {
 } = require('../controllers/purchaserequest');
 
 router.get('/:id', getPurchase);
-router.get('/', getPurchases);
 router.post('/', createPurchase);
 router.put('/', editPurchase);
 router.delete('/', deletePurchase);

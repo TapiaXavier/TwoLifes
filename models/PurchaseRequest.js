@@ -19,7 +19,7 @@ PurchaseRequestSchema.methods.publicData = function(){
     
 }
 
-mongoose.model('purchase', PurchaseRequestSchema);
+mongoose.model('Purchase', PurchaseRequestSchema);
 
 /*
 class PurchaseRequest {

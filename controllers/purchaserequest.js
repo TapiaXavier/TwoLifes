@@ -62,7 +62,6 @@ function deletePurchase(req, res, next){
 }
 
 module.exports = {
-    getPurchases,
     getPurchase,
     createPurchase,
     editPurchase,
