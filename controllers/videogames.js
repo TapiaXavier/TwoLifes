@@ -1,5 +1,3 @@
-// const Videogame = require('../models/Videogame')
-
 const moongose = require('mongoose');
 const Videogame = moongose.model('Videogame');
 

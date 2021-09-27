@@ -10,28 +10,23 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true
 })
 
-require('./models/Ad');
-
-const swaggerUi = require('swagger-ui-express');
-// const swaggerDocument = require('./swagger.json');
-const YAML = require('yamljs');
-const swaggerDocument = YAML.load('./swagger.yaml');
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 require('./models/Ad')
 require('./models/User')
 require('./models/PurchaseRequest')
 require('./models/Videogame')
+
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/v1', require('./routes'));
 
-const PORT = 4001
-//Server iniciation
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`)
-})
+var server = app.listen(process.env.PORT || 3000, function () {
+    console.log('Escuchando en el puerto ' + server.address().port);
+  });
