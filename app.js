@@ -10,20 +10,19 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-    useCreateIndex: true
 })
 
 require('./models/Ad')
 require('./models/User')
 require('./models/PurchaseRequest')
 require('./models/Videogame')
+
 app.use('/v1', require('./routes'));
 
-const PORT = 4001
-//Server iniciation
-app.listen(PORT, () => {
-    console.log(`Server listening on port ${PORT}`)
-})
+
+var server = app.listen(process.env.PORT || 3000, function () {
+    console.log('Escuchando en el puerto ' + server.address().port);
+  });
