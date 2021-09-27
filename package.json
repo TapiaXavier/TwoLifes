@@ -1,5 +1,5 @@
 {
-  "name": "TwoLifes",
+  "name": "twolifes",
   "version": "1.0.0",
   "description": "API REST para el diseño de la página para la compra-vente de videojuegos de 2da mano",
   "main": "app.js",

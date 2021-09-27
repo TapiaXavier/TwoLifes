@@ -1,14 +1,20 @@
-const config = require('./config')
+// Express
 const express = require('express')
 const app = express()
+const mongoose = require("mongoose");
 
+//Body Parser
 const bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+    extended: false
+}))
 app.use(bodyParser.json())
 
-const mongoose = require('mongoose');
-mongoose.connect(config.MONGODB_URI)
-mongoose.set("debug", true)
+mongoose.connect(MONGODB_URI, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true
+})
 
 require('./models/Ad');
 
@@ -18,9 +24,14 @@ const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+require('./models/Ad')
+require('./models/User')
+require('./models/PurchaseRequest')
+require('./models/Videogame')
 app.use('/v1', require('./routes'));
 
 const PORT = 4001
+//Server iniciation
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`)
 })
