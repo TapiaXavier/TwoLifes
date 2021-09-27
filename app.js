@@ -27,7 +27,6 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/v1', require('./routes'));
 
-
 var server = app.listen(process.env.PORT || 3000, function () {
     console.log('Escuchando en el puerto ' + server.address().port);
   });
