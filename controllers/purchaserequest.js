@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const Purchase = mongoose.model('Purchase');
 
 //Metodo para crear una solicitud
-function createPurchase(req, res){
+function createPurchase(req, res, next) {
 
-    let purch = new Purchase(req, body);
+    let purch = new Purchase(req.body);
 
     purch.save().then(newPurchase => {
         res.status(200).send(newPurchase)
@@ -14,7 +14,7 @@ function createPurchase(req, res){
 
 
 //Método para recuperar solicitud by ID
-function  getPurchase(req, res){
+function getPurchase(req, res, next) {
 
     if(req.params.id){
         Purchase.findById(req.params.id).then(purchase => {
@@ -30,7 +30,7 @@ function  getPurchase(req, res){
 
 
 //Método para editar una solicitud
-function editPurchase(req, res){
+function editPurchase(req, res, next) {
 
     Purchase.findById(req.params.id).then(purchase => {
         if(!purchase) {return res.sendStatus(401); }
@@ -56,7 +56,7 @@ function editPurchase(req, res){
 function deletePurchase(req, res, next){
 
     Purchase.findOneAndDelete({_id: req.params.id})
-    .the(r => res.status(200).send("Petición eliminada"))
+    .then(r => res.status(200).send("Petición eliminada"))
     .catch(next)
 
 }

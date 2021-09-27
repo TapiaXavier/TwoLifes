@@ -6,7 +6,7 @@ const PurchaseRequestSchema = new mongoose.Schema({
     relaseDate: {type: Date, required: true},
     status: {type: String, enum: ['Aceptada', 'En espera', 'Negada']},
     deliveryDate: {type: Date}
-}, {timestamps: true, collection: 'purchase_col'} )
+}, {timestamps: true, collection: 'purchaserequests_col'} )
 
 PurchaseRequestSchema.methods.publicData = function(){
     return {
