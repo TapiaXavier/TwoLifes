@@ -1,0 +1,8 @@
+OK:
+  description: (OK) Recurso eliminado exitosamente.
+NotFound:
+  description: (NotFound) Recurso no encontrado.
+BadRequest:
+  description: (BadRequest) La petición no se ha hecho correctamente.
+ServerError:
+  description: (ServerError) Error en el servidor.

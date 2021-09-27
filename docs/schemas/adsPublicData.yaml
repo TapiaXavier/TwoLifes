@@ -1,0 +1,24 @@
+type: object
+properties:
+  _id:
+    type: string
+    description: ID del anuncio
+  idAdvertiser:
+    type: string
+    description: ID del anunciante
+  idVideogame:
+    type: string
+    description: ID del videojuego
+  idPlatform:
+    type: string
+    description: ID de la plataforma
+  price:
+    type: number
+    description: Precio del videojuego
+  description:
+    type: string
+    description: Descripción del videojuego
+  status:
+    type: string
+    enum: [En venta, Vendido]
+    description: Estado del anuncio

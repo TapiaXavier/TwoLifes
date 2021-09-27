@@ -1,0 +1,70 @@
+get:
+  tags:
+  - Videojuegos
+  summary: Obtener los datos de un videojuego.
+  parameters:
+  - name: id
+    in: path
+    description: ID del videojuego.
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) El videojuego fue encontrado exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/videogamesPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+put:
+  tags:
+  - Videojuegos
+  summary: Modificar los datos de un videojuego.
+  parameters:
+  - name: id
+    in: path
+    description: ID del videojuego.
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) El videojuego fue actualizado exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/videogamesPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+delete:
+  tags:
+  - Videojuegos
+  summary: Eliminar un videojuego.
+  parameters:
+  - name: id
+    in: path
+    description: ID del videojuego.
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      $ref: ../responses.yaml#/OK
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

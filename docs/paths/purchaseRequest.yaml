@@ -1,0 +1,70 @@
+get:
+  tags:
+  - Solicitudes
+  summary: Obtener los datos de una solicitud.
+  parameters:
+  - name: id
+    in: path
+    description: ID de la solicitud
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Solicitud encontrada.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/purchaseRequestsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+put:
+  tags:
+  - Solicitudes
+  summary: Modificar los datos de una solicitud.
+  parameters:
+  - name: id
+    in: path
+    description: ID de la solicitud
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Solicitud modificada exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/purchaseRequestsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+delete:
+  tags:
+  - Solicitudes
+  summary: Eliminar una solicitud.
+  parameters:
+  - name: id
+    in: path
+    description: ID de la solicitud
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      $ref: ../responses.yaml#/OK
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

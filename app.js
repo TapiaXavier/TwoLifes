@@ -20,6 +20,11 @@ require('./models/User')
 require('./models/PurchaseRequest')
 require('./models/Videogame')
 
+const swaggerUi = require('swagger-ui-express');
+const YAML = require('yamljs');
+const swaggerDocument = YAML.load('./swagger.yaml');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/v1', require('./routes'));
 
 
