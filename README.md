@@ -70,6 +70,10 @@ La entidades que interactuan dentro del proyecto son:
  - NodeJS
  - Express.js
  - Nodemon
+ - Swagger
+
+### Documentacion de la API
+[Twolifes](https://twolifes.herokuapp.com/api-docs/)
 
 ### Instalación
 
