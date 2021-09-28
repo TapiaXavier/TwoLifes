@@ -8,6 +8,7 @@ const {
 } = require('../controllers/users')
 
 router.get('/', getUsers)
+router.get('/:id', getUsers)
 router.post('/', createUser)
 router.put('/:id', modifyUser)
 router.delete('/:id', deleteUser)
