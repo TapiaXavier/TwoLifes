@@ -13,7 +13,7 @@ app.use(bodyParser.json())
 mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-})
+}).catch(error => handleError(error));
 
 require('./models/Ad')
 require('./models/User')

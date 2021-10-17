@@ -49,7 +49,7 @@ function getUsers(req, res, next) {
       })
       .catch(next)
     } else {
-      User.find()
+      User.find().select("-hash -salt -createdAt -updatedAt -__v")
       .then(users => {
         res.send(users)
         //res.json(users.publicData())
