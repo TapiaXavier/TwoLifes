@@ -2,7 +2,7 @@ post:
   tags:
   - Solicitudes
   summary: Crear una nueva solicitud.
-  requesBody:
+  requestBody:
     content:
       application/json:
         schema:

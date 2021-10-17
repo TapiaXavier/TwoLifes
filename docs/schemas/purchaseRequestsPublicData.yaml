@@ -11,7 +11,7 @@ properties:
     description: ID del solicitante
   date:
     type: string
-    description:
+    description: Fecha de la solicitud
   status:
     type: string
     enum: [Aceptada, Rechazada, Pendiente]
