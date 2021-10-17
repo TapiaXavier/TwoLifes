@@ -1,14 +1,15 @@
 const router = require('express').Router();
 
 const {
-    getPurchases,
     getPurchase,
+    getPurchaseByUser,
     createPurchase,
     editPurchase,
     deletePurchase
 } = require('../controllers/purchaserequest');
 
 router.get('/', getPurchase)
+router.get('/u/:id', getPurchaseByUser);
 router.get('/:id', getPurchase);
 router.post('/', createPurchase);
 router.put('/:id', editPurchase);

@@ -13,7 +13,8 @@ app.use(bodyParser.json())
 mongoose.connect(process.env.MONGODB_URI, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
-}).catch(error => handleError(error));
+    useCreateIndex: true,
+}).catch(error => console.log(error));
 
 require('./models/Ad')
 require('./models/User')
@@ -29,4 +30,4 @@ app.use('/v1', require('./routes'));
 
 var server = app.listen(process.env.PORT || 3000, function () {
     console.log('Escuchando en el puerto ' + server.address().port);
-  });
+});
