@@ -7,6 +7,7 @@ router.get('/', (req, res)=>{
   dedicated for those seeking to buy and sell used video games without a hassle`);
 });
 
+router.use('/',require('./auth'));
 router.use('/users', require('./users'));
 router.use('/videogames', require('./videogames'));
 router.use('/ads', require('./ads'));
