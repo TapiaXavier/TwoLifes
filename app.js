@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV!=='production'){
+    require('dotenv').config();
+  }
+
 // Express
 const express = require('express')
 const app = express()
@@ -10,16 +14,17 @@ app.use(bodyParser.urlencoded({
 }))
 app.use(bodyParser.json())
 
-mongoose.connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI, { 
     useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
+    useNewUrlParser: true, 
+    useCreateIndex: true 
 }).catch(error => console.log(error));
 
 require('./models/Ad')
 require('./models/User')
 require('./models/PurchaseRequest')
 require('./models/Videogame')
+require('./config/passport')
 
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
