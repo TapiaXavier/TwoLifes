@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Purchase = mongoose.model('Purchase');
+const {requestFilters}=require('../resource/filters')
 
 //Metodo para crear una solicitud
 function createPurchase(req, res, next) {
@@ -21,9 +22,17 @@ function getPurchase(req, res, next) {
             res.send(purchase)
         }).catch(next)
     } else {
-        Purchase.find().then(purchase => {
-            res.send(purchase)
-        }).catch(next)
+        if(Object.keys(req.query).length===0)
+        {
+            Purchase.find(requestFilters(req.query)).then(purchase => {
+                res.send(purchase)
+            }).catch(next)
+        }else{
+            Purchase.find(requestFilters(req.query)).then(purchase => {
+                res.send(purchase)
+            }).catch(next)
+        }
+       
     }
 }
 
