@@ -8,6 +8,8 @@ const PurchaseRequestSchema = new mongoose.Schema({
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
+let filters=['releasedate','deliverydate','status','user'];
+
 PurchaseRequestSchema.methods.publicData = function(){
     return {
         advertiser: this.idAdvertiser,
@@ -18,6 +20,15 @@ PurchaseRequestSchema.methods.publicData = function(){
     }
     
 }
+
+PurchaseRequestSchema.statics.isFiltersAllowed=function(filter){
+  
+    return  filters.includes(filter);
+  }
+  PurchaseRequestSchema.statics.filtersAllowed=function(){
+    
+    return  filters;
+  }
 
 mongoose.model('Purchase', PurchaseRequestSchema);
 
