@@ -1,11 +1,11 @@
 function requestFilters(query){ console.log('filters');
   const queryResult={}
-  const {user,releaseDate,status,deliveryDate}=query
+  const {user,relaseDate,status,deliveryDate}=query
   if(user!==undefined){
     queryResult.idUser=user
   }
-  if(releaseDate!==undefined){
-   queryResult.releaseDate=releaseDate
+  if(relaseDate!==undefined){
+   queryResult.relaseDate=relaseDate
   }
   if(status!==undefined){
     queryResult.status=status
@@ -28,27 +28,27 @@ function requestFilters(query){ console.log('filters');
     }
     
   }
-  if(releaseDate!==undefined){
+  if(relaseDate!==undefined){
     let date,regex
-    if(releaseDate.includes('[')&&releaseDate.includes(']')){
+    if(relaseDate.includes('[')&&relaseDate.includes(']')){
       regex=/\[(.*?)\]/
-      date=releaseDate.split(regex)[1].split(',')
-      queryResult.releaseDate={'$lte':date[0],'$gte':date[1]}
+      date=relaseDate.split(regex)[1].split(',')
+      queryResult.relaseDate={'$lte':date[0],'$gte':date[1]}
      
-    }else if(releaseDate.includes('[')){
+    }else if(relaseDate.includes('[')){
       regex=/\[.*?/
-      date=releaseDate.split(regex)[1]
-      queryResult.releaseDate={'$gte':new Date(date)}
-    }else if(releaseDate.includes(']')){
+      date=relaseDate.split(regex)[1]
+      queryResult.relaseDate={'$gte':new Date(date)}
+    }else if(relaseDate.includes(']')){
       regex=/(.*?)\]/
-      date=releaseDate.split(regex)[1]
-      queryResult.releaseDate={'$lte':date}
+      date=relaseDate.split(regex)[1]
+      queryResult.relaseDate={'$lte':date}
     }
     
   }
   
 
-  console.log(user,releaseDate,status,deliveryDate,'query ',queryResult)
+  console.log(user,relaseDate,status,deliveryDate,'query ',queryResult)
   
   return queryResult
 }
