@@ -15,7 +15,7 @@ function requestFilters(query){ console.log('filters');
     if(deliveryDate.includes('[')&&deliveryDate.includes(']')){
       regex=/\[(.*?)\]/
       date=deliveryDate.split(regex)[1].split(',')
-      queryResult.deliveryDate={'$lte':date[0],'$gte':date[1]}
+      queryResult.deliveryDate={'$lte':new Date(date[0]),'$gte':new Date(date[1])}
      
     }else if(deliveryDate.includes('[')){
       regex=/\[.*?/
@@ -24,7 +24,7 @@ function requestFilters(query){ console.log('filters');
     }else if(deliveryDate.includes(']')){
       regex=/(.*?)\]/
       date=deliveryDate.split(regex)[1]
-      queryResult.deliveryDate={'$lte':date}
+      queryResult.deliveryDate={'$lte':new Date(date)}
     }
     
   }
@@ -33,7 +33,7 @@ function requestFilters(query){ console.log('filters');
     if(relaseDate.includes('[')&&relaseDate.includes(']')){
       regex=/\[(.*?)\]/
       date=relaseDate.split(regex)[1].split(',')
-      queryResult.relaseDate={'$lte':date[0],'$gte':date[1]}
+      queryResult.relaseDate={'$lte':new Date(date[0]),'$gte':new Date(date[1])}
      
     }else if(relaseDate.includes('[')){
       regex=/\[.*?/
@@ -42,7 +42,7 @@ function requestFilters(query){ console.log('filters');
     }else if(relaseDate.includes(']')){
       regex=/(.*?)\]/
       date=relaseDate.split(regex)[1]
-      queryResult.relaseDate={'$lte':date}
+      queryResult.relaseDate={'$lte':new Date(date)}
     }
     
   }
