@@ -15,16 +15,16 @@ function requestFilters(query){ console.log('filters');
     if(deliveryDate.includes('[')&&deliveryDate.includes(']')){
       regex=/\[(.*?)\]/
       date=deliveryDate.split(regex)[1].split(',')
-      queryResult.deliveryDate={'$lte':new Date(date[0]),'$gte':new Date(date[1])}
+      queryResult.deliveryDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
      
     }else if(deliveryDate.includes('[')){
       regex=/\[.*?/
       date=deliveryDate.split(regex)[1]
-      queryResult.deliveryDate={'$gte':new Date(date)}
+      queryResult.deliveryDate={$gte:new Date(date)}
     }else if(deliveryDate.includes(']')){
       regex=/(.*?)\]/
       date=deliveryDate.split(regex)[1]
-      queryResult.deliveryDate={'$lte':new Date(date)}
+      queryResult.deliveryDate={$lte:new Date(date)}
     }
     
   }
@@ -33,16 +33,16 @@ function requestFilters(query){ console.log('filters');
     if(relaseDate.includes('[')&&relaseDate.includes(']')){
       regex=/\[(.*?)\]/
       date=relaseDate.split(regex)[1].split(',')
-      queryResult.relaseDate={'$lte':new Date(date[0]),'$gte':new Date(date[1])}
+      queryResult.relaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
      
     }else if(relaseDate.includes('[')){
       regex=/\[.*?/
       date=relaseDate.split(regex)[1]
-      queryResult.relaseDate={'$gte':new Date(date)}
+      queryResult.relaseDate={$gte:new Date(date)}
     }else if(relaseDate.includes(']')){
       regex=/(.*?)\]/
       date=relaseDate.split(regex)[1]
-      queryResult.relaseDate={'$lte':new Date(date)}
+      queryResult.relaseDate={$lte:new Date(date)}
     }
     
   }
