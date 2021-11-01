@@ -11,7 +11,7 @@ module.exports=(req,res,next)=>{
        
           for(field in query){
             if(field!=='populate')
-            band.push(model.isPopulateAllowed(field));
+            band.push(model.isFiltersAllowed(field));
           }
            if(!band.includes(false)){
              return next()
