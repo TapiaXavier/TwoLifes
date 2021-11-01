@@ -23,10 +23,10 @@ function getPurchase(req, res, next) {
         }).catch(next)
     } else {
        
-            Purchase.find(requestFilters(req.query)).populate(populatePurchaseRequest(validatePopulate(req.query)))
-            .then(purchase => {
-                res.send(purchase)
-            }).catch(next)
+        Purchase.find(requestFilters(req.query)).populate(populatePurchaseRequest(validatePopulate(req.query)))
+        .then(purchase => {
+            res.send(purchase)
+        }).catch(next)
        
     }
 }
