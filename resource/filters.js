@@ -8,13 +8,15 @@ const Ads=mongoose.model('Ad');
 
 function requestFilters(query){ 
   const queryResult={}
-  const {user,relaseDate,status,deliveryDate}=query
+  const {user,_user,relaseDate,status,deliveryDate}=query
   const regexDate=/[\[\]']+/g
   console.log('fechas ',relaseDate)
   if(user!==undefined){
     queryResult.idUser=user
   }
-  
+  if(_user!==undefined){
+    queryResult.idUser={$ne:_user}
+  }
   if(status!==undefined){
     queryResult.status=status
   }
@@ -49,9 +51,6 @@ function requestFilters(query){
     }
     
   }
-  
-
-  console.log(user,relaseDate,status,deliveryDate,'query ',query,'query R',queryResult)
   
   return queryResult
 }

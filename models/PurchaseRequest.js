@@ -8,7 +8,7 @@ const PurchaseRequestSchema = new mongoose.Schema({
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
-let filters=['relaseDate','deliveryDate','status','user'];
+let filters=['relaseDate','deliveryDate','status','user','_user'];
 let populates=['user','adviser'];
 
 PurchaseRequestSchema.methods.publicData = function(){
