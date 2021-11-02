@@ -32,7 +32,7 @@ const VideogameSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    plataforms: {
+    platforms: {
         type: [String],
         required: true
     }
@@ -52,7 +52,7 @@ VideogameSchema.methods.publicData = function () {
         languages: this.languages,
         releaseDate: this.releaseDate,
         synopsis: this.synopsis,
-        plataforms: this.plataforms,
+        platforms: this.platforms,
     };
 };
 
