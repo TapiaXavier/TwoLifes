@@ -82,7 +82,7 @@ const secret= require('../config').secret;
   UserSchema.methods.generateJWT = function() {
     const today = new Date();
     const exp = new Date(today);
-    exp.setDate(today.getDate() + 60);
+    exp.setDate(today.getDate() + 7);
   
     return jwt.sign({
       id: this._id,
