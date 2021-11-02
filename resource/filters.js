@@ -131,7 +131,6 @@ function videogameFilters(query){
     }
     
   }
-  console.log(releaseDate,name,platform,language,genre,category,synopsis,'query ',queryResult)
   return queryResult
 }
 
