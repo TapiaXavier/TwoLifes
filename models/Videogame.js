@@ -41,6 +41,9 @@ const VideogameSchema = new mongoose.Schema({
     collection: 'videogames_col'
 });
 
+let filters=['relaseDate','name','platform','language','category','genre','synopsis'];
+let populates=['platform'];
+
 VideogameSchema.methods.publicData = function () {
     return {
         name: this.name,
@@ -52,6 +55,21 @@ VideogameSchema.methods.publicData = function () {
         plataforms: this.plataforms,
     };
 };
+
+
+VideogameSchema.statics.isFiltersAllowed=function(filter){
+    return  filters.includes(filter);
+  }
+VideogameSchema.statics.filtersAllowed=function(){
+    return  filters;
+}
+
+VideogameSchema.statics.isPopulateAllowed=function(populate){
+    return  populates.includes(populate);
+}
+VideogameSchema.statics.populateAllowed=function(){
+    return  populates;
+}
 
 VideogameSchema.plugin(uniqueValidator, {
     message: "El videojuego ya existe en nuestra base de datos"
