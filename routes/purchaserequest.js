@@ -1,4 +1,6 @@
 const router = require('express').Router();
+const populate=require('../middleware/populate')
+const filters=require('../middleware/filters')
 
 const {
     getPurchase,
@@ -8,7 +10,7 @@ const {
     deletePurchase
 } = require('../controllers/purchaserequest');
 
-router.get('/', getPurchase)
+router.get('/',[filters,populate], getPurchase)
 router.get('/u/:id', getPurchaseByUser);
 router.get('/:id', getPurchase);
 router.post('/', createPurchase);

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const AdSchema = new mongoose.Schema({
-    idAdvertiser: {type: mongoose.Schema.Types.ObjectId, ref: 'users_col', required: true},
-    idVideogame: {type: mongoose.Schema.Types.ObjectId, ref: 'games_col', required: true},
-    idPlatform: {type: mongoose.Schema.Types.ObjectId, ref: 'platform_col', required: true},
+    idAdvertiser: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    idVideogame: {type: mongoose.Schema.Types.ObjectId, ref: 'Videogame', required: true},
+    idPlatform: {type: mongoose.Schema.Types.ObjectId, ref: 'Platform', required: true},
     price: {type: Number, min: 0, required: true},
     description: {type: String, required: true},
     status: {type: String, enum: ['En venta', 'Vendido']}
@@ -19,6 +19,24 @@ AdSchema.methods.publicData = function() {
         description: this.description,
         status: this.status
     }
+}
+
+let filters=['adviser','videogame','platform','price','status'];
+let populates=['videogame','adviser','platform'];
+
+
+AdSchema.statics.isFiltersAllowed=function(filter){
+    return  filters.includes(filter);
+  }
+AdSchema.statics.filtersAllowed=function(){
+    return  filters;
+}
+
+AdSchema.statics.isPopulateAllowed=function(populate){
+    return  populates.includes(populate);
+}
+AdSchema.statics.populateAllowed=function(){
+    return  populates;
 }
 
 mongoose.model('Ad', AdSchema);

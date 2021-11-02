@@ -1,5 +1,6 @@
 const moongose = require('mongoose');
 const Videogame = moongose.model('Videogame');
+const {videogameFilters,populateVideogame}=require('../resource/filters')
 
 function createVideogame(req, res, next) {
 
@@ -19,7 +20,8 @@ function getVideogame(req, res, next) {
         }).catch(next)
 
     } else {
-        Videogame.find().then(videogames => {
+        Videogame.find(videogameFilters(req.query)).populate(populateVideogame(req.query))
+        .then(videogames => {
             res.send(videogames)
         }).catch(next)
     }
