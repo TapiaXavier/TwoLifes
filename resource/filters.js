@@ -10,7 +10,6 @@ function requestFilters(query){
   const queryResult={}
   const {user,_user,relaseDate,status,deliveryDate}=query
   const regexDate=/[\[\]']+/g
-  console.log('fechas ',relaseDate)
   if(user!==undefined){
     queryResult.idUser=user
   }
@@ -21,32 +20,29 @@ function requestFilters(query){
     queryResult.status=status
   }
   if(deliveryDate!==undefined){
-    let date
+      let date=deliveryDate.replace(regexDate,'').split(',')
     if(deliveryDate.includes('[')&&deliveryDate.includes(']')){
-      date=deliveryDate.split(regexDate)[1].split(',')
-      queryResult.deliveryDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
-     
+      if(date.length>1)
+        queryResult.deliveryDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
+      else
+        queryResult.deliveryDate={$eq:new Date(date[0])}
     }else if(deliveryDate.includes('[')){
-      date=deliveryDate.split(regexDate)[1]
       queryResult.deliveryDate={$gte:new Date(date)}
     }else if(deliveryDate.includes(']')){
-      console.log('fecha ',deliveryDate.split(regexDate))
-      date=deliveryDate.split(regexDate)[1]
       queryResult.deliveryDate={$lte:new Date(date)}
     }
     
   }
   if(relaseDate!==undefined){
-    let date
+    let date=relaseDate.replace(regexDate,'').split(',')
     if(relaseDate.includes('[')&&relaseDate.includes(']')){
-      date=relaseDate.replace(regexDate,'').split(',')
-      queryResult.relaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
-     
+      if(date.length>1)
+        queryResult.relaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
+      else
+        queryResult.relaseDate={$eq:new Date(date[0])}
     }else if(relaseDate.includes('[')){
-      date=relaseDate.replace(regexDate,'')
       queryResult.relaseDate={$gte:new Date(date)}
     }else if(relaseDate.includes(']')){
-      date=relaseDate.replace(regexDate,'')
       queryResult.relaseDate={$lte:new Date(date)}
     }
     
@@ -59,7 +55,6 @@ function adFilters(query){
   const queryResult={}
   const {adviser,videogame,platform,status,price}=query
   const regexDate=/[\[\]']+/g
-  console.log('fechas ',platform)
   if(adviser!==undefined){
     queryResult.idAdvertiser=adviser
   }
@@ -73,17 +68,12 @@ function adFilters(query){
     queryResult.status=status
   }
   if(price!==undefined){
-    let cost
+    let cost=price.replace(regexDate,'').split(',')
     if(price.includes('[')&&price.includes(']')){
-      cost=price.split(regexDate)[1].split(',')
       queryResult.price={$gte:cost[0],$lte:cost[1]}
-     
     }else if(price.includes('[')){
-      cost=price.split(regexDate)[1]
       queryResult.price={$gte:cost}
     }else if(price.includes(']')){
-      console.log('fecha ',price.split(regexDate))
-      cost=price.split(regexDate)[1]
       queryResult.price={$lte:cost}
     }
     
@@ -96,43 +86,70 @@ function videogameFilters(query){
   const queryResult={}
   const {releaseDate,name,platform,language,genre,category,synopsis}=query
   const regexDate=/[\[\]']+/g
-  console.log('fechas ',platform)
   
   if(name!==undefined){
     queryResult.name={$regex:`.*${name}.*`, $options:'i'}
   }
   if(platform!==undefined){
-    queryResult.idPlatform=platform    
+    let plat=platform.replace(regexDate,'').split(',')
+    queryResult.platforms={$regex:`^${plat}.*`, $options:'i'}    
   }
   if(language!==undefined){
-    queryResult.language={$regex:`.*${language}}.*`, $options:'i'}
-  }
-  if(genre!==undefined){
-    queryResult.genre={$regex:`.*${genre}.*`, $options:'i'}
+    queryResult.$or=queryRegex('language','^','.*',language,'i')
   }
   if(category!==undefined){
-    queryResult.category={$regex:`.*${category}.*`, $options:'i'}
+    if(category.includes('[')&&category.includes(']')){
+      let cat=category.replace(regexDate,'').split(',')
+      queryResult.$or=queryRegex('ageCategory','^','.*',cat,'i')
+    }
+  }
+  if(genre!==undefined){
+    if(category.includes('[')&&category.includes(']')){
+      let gen=genre.replace(regexDate,'').split(',')
+      queryResult.$or=queryRegex('genre','^','.*',gen,'i')
+    }
   }
   if(synopsis!==undefined){
     queryResult.synopsis={$regex:`.*${synopsis}.*`, $options:'i'}
   }
   if(releaseDate!==undefined){
-    let date
-    if(relaseDate.includes('[')&&relaseDate.includes(']')){
-      date=relaseDate.replace(regexDate,'').split(',')
-      queryResult.relaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
-     
+    let  date=releaseDate.replace(regexDate,'').split(',')
+    if(releaseDate.includes('[')&&relaseDate.includes(']')){
+      if(date.length>1)
+        queryResult.releaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
+      else
+        queryResult.releaseDate={$eq:new Date(date[0])}
     }else if(relaseDate.includes('[')){
-      date=relaseDate.replace(regexDate,'')
-      queryResult.relaseDate={$gte:new Date(date)}
+      queryResult.releaseDate={$gte:new Date(date)}
     }else if(relaseDate.includes(']')){
-      date=relaseDate.replace(regexDate,'')
-      queryResult.relaseDate={$lte:new Date(date)}
+      queryResult.releaseDate={$lte:new Date(date)}
     }
     
   }
+  console.log('query ',queryResult, 'obj modified ')
   return queryResult
 }
+
+/**
+ * Function to return a regex expression query for one field
+ * @param {String} field to be query 
+ * @param {String} initial initial value of regex 
+ * @param {String} end end value of regex
+ * @param {Array} values  values in the middle regex explession
+ * @param {String} options options regex expression
+ * @return {Array} query array regex object 
+ */
+
+function queryRegex(field,initial,end,values,options){
+  let filters=[] 
+  values.map(value=>{
+    filters.push({[field]:{$regex:`${initial}${value}${end}`,$options:options}})
+  })
+  
+
+  return filters
+}
+
 
 /**
  * Validate if filter populate has values and return and array values

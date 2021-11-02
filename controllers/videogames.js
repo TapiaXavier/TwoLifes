@@ -55,8 +55,8 @@ function modifyVideogame(req, res, next) {
         if (typeof newInfo.synopsis !== 'undefined')
             videogame.synopsis = newInfo.synopsis
 
-        if (typeof newInfo.plataforms !== 'undefined')
-            videogame.plataforms = newInfo.plataforms
+        if (typeof newInfo.platforms !== 'undefined')
+            videogame.platforms = newInfo.platforms
 
         videogame.save().then( updated => {
             res.status(200).json(updated.publicData())
