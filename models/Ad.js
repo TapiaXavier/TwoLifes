@@ -21,8 +21,8 @@ AdSchema.methods.publicData = function() {
     }
 }
 
-let filters=['adviser','videogame','platform','price','status'];
-let populates=['videogame','adviser','platform'];
+let filters=['videogame','platform','price','status','advertiser','_advertiser'];
+let populates=['videogame','advertiser','platform'];
 
 
 AdSchema.statics.isFiltersAllowed=function(filter){
