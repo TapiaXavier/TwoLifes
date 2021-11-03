@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
 const PurchaseRequestSchema = new mongoose.Schema({
-    idAdvertiser: {type: mongoose.Schema.Types.ObjectId, ref: 'user_col', required: true},
-    idUser: {type: mongoose.Schema.Types.ObjectId, ref: 'user_col', required: true},
+    idAdvertiser: {type: mongoose.Schema.Types.ObjectId, ref: 'Ad', required: true},
+    idUser: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
     relaseDate: {type: Date, required: true},
     status: {type: String, enum: ['Aceptada', 'En espera', 'Negada']},
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
+
+let filters=['relaseDate','deliveryDate','status','user','_user'];
+let populates=['user','adviser'];
 
 PurchaseRequestSchema.methods.publicData = function(){
     return {
@@ -19,6 +22,20 @@ PurchaseRequestSchema.methods.publicData = function(){
     
 }
 
+PurchaseRequestSchema.statics.isFiltersAllowed=function(filter){
+    return  filters.includes(filter);
+  }
+PurchaseRequestSchema.statics.filtersAllowed=function(){
+    return  filters;
+}
+
+PurchaseRequestSchema.statics.isPopulateAllowed=function(populate){
+    return  populates.includes(populate);
+}
+PurchaseRequestSchema.statics.populateAllowed=function(){
+    return  populates;
+}
+ 
 mongoose.model('Purchase', PurchaseRequestSchema);
 
 /*

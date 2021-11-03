@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Ad = mongoose.model('Ad');
+const {adFilters,populateAd}=require('../resource/filters')
 
 function createAd(req, res, next) {
     let ad = new Ad(req.body);
@@ -12,14 +13,12 @@ function createAd(req, res, next) {
 function getAd(req, res, next) {
     if (req.params.id) {
         Ad.findById(req.params.id)
-            .then(ad => res.send(ad.publicData()))
+            .then(ad => res.send(ad))
             .catch(next)
     } else {
-        Ad.find()
+        Ad.find(adFilters(req.query)).populate(populateAd(req.query))
             .then(ads => {
-                ads_public = []
-                ads.forEach(ad => { ads_public.push(ad.publicData()) })
-                res.send(ads_public)
+                res.send(ads)
             })
             .catch(next)
     }
