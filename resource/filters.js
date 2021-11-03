@@ -27,9 +27,9 @@ function requestFilters(query){
       else
         queryResult.deliveryDate={$eq:new Date(date[0])}
     }else if(deliveryDate.includes('[')){
-      queryResult.deliveryDate={$gte:new Date(date)}
+      queryResult.deliveryDate={$gte:new Date(date[0])}
     }else if(deliveryDate.includes(']')){
-      queryResult.deliveryDate={$lte:new Date(date)}
+      queryResult.deliveryDate={$lte:new Date(date[0])}
     }
     
   }
@@ -41,9 +41,9 @@ function requestFilters(query){
       else
         queryResult.relaseDate={$eq:new Date(date[0])}
     }else if(relaseDate.includes('[')){
-      queryResult.relaseDate={$gte:new Date(date)}
+      queryResult.relaseDate={$gte:new Date(date[0])}
     }else if(relaseDate.includes(']')){
-      queryResult.relaseDate={$lte:new Date(date)}
+      queryResult.relaseDate={$lte:new Date(date[0])}
     }
     
   }
@@ -53,10 +53,14 @@ function requestFilters(query){
 
 function adFilters(query){ 
   const queryResult={}
-  const {adviser,videogame,platform,status,price}=query
+  const {adviser,videogame,platform,status,price,advertiser,_advertiser}=query
   const regexDate=/[\[\]']+/g
-  if(adviser!==undefined){
-    queryResult.idAdvertiser=adviser
+ 
+  if(advertiser!==undefined){
+    queryResult.idAdvertiser=advertiser
+  }
+  if(_advertiser!==undefined){
+    queryResult.idAdvertiser={$ne:_advertiser}
   }
   if(videogame!==undefined){
     queryResult.idVideogame=videogame
@@ -70,11 +74,14 @@ function adFilters(query){
   if(price!==undefined){
     let cost=price.replace(regexDate,'').split(',')
     if(price.includes('[')&&price.includes(']')){
-      queryResult.price={$gte:cost[0],$lte:cost[1]}
+      if(cost.length>1)
+        queryResult.price={$gte:cost[0],$lte:cost[1]}
+      else
+        queryResult.price={$eq:cost[0]}
     }else if(price.includes('[')){
-      queryResult.price={$gte:cost}
+      queryResult.price={$gte:cost[0]}
     }else if(price.includes(']')){
-      queryResult.price={$lte:cost}
+      queryResult.price={$lte:cost[0]}
     }
     
   }
@@ -95,7 +102,10 @@ function videogameFilters(query){
     queryResult.platforms={$regex:`^${plat}.*`, $options:'i'}    
   }
   if(language!==undefined){
-    queryResult.$or=queryRegex('language','^','.*',language,'i')
+    if(language.includes('[')&&language.includes(']')){
+      let lang =language.replace(regexDate,'').split(',')
+      queryResult.$or=queryRegex('languages','^','.*',lang,'i')
+    }
   }
   if(category!==undefined){
     if(category.includes('[')&&category.includes(']')){
@@ -104,7 +114,7 @@ function videogameFilters(query){
     }
   }
   if(genre!==undefined){
-    if(category.includes('[')&&category.includes(']')){
+    if(genre.includes('[')&&genre.includes(']')){
       let gen=genre.replace(regexDate,'').split(',')
       queryResult.$or=queryRegex('genre','^','.*',gen,'i')
     }
@@ -114,19 +124,18 @@ function videogameFilters(query){
   }
   if(releaseDate!==undefined){
     let  date=releaseDate.replace(regexDate,'').split(',')
-    if(releaseDate.includes('[')&&relaseDate.includes(']')){
+    if(releaseDate.includes('[')&&releaseDate.includes(']')){
       if(date.length>1)
         queryResult.releaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
       else
         queryResult.releaseDate={$eq:new Date(date[0])}
-    }else if(relaseDate.includes('[')){
-      queryResult.releaseDate={$gte:new Date(date)}
-    }else if(relaseDate.includes(']')){
-      queryResult.releaseDate={$lte:new Date(date)}
+    }else if(releaseDate.includes('[')){
+      queryResult.releaseDate={$gte:new Date(date[0])}
+    }else if(releaseDate.includes(']')){
+      queryResult.releaseDate={$lte:new Date(date[0])}
     }
     
   }
-  console.log('query ',queryResult, 'obj modified ')
   return queryResult
 }
 
@@ -182,7 +191,7 @@ function populatePurchaseRequest(querys){
     if(field==='user'){
       query.push({path:'idUser',select:'-hash -salt'})
     }
-    if(field==='adviser'){
+    if(field==='advertiser'){
       query.push({path:'idAdvertiser'})
     }
   })
@@ -204,7 +213,7 @@ function populatePurchaseRequest(querys){
     if(field==='videogame'){
       query.push({path:'idVideogame'})
     }
-    if(field==='adviser'){
+    if(field==='advertiser'){
       query.push({path:'idAdvertiser'})
     }
     if(field==='platform'){
