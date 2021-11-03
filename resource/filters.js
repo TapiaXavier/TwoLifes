@@ -214,7 +214,7 @@ function populatePurchaseRequest(querys){
       query.push({path:'idVideogame'})
     }
     if(field==='advertiser'){
-      query.push({path:'idAdvertiser'})
+      query.push({path:'idAdvertiser',select:'-hash -salt'})
     }
     if(field==='platform'){
       query.push({path:'idPlatform'})
