@@ -8,8 +8,9 @@ const PurchaseRequestSchema = new mongoose.Schema({
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
-let filters=['relaseDate','deliveryDate','status','advertiser','user','_user'];
+let filters=['relaseDate','deliveryDate','status','advertiser','user','_user','orderBy','limit'];
 let populates=['user','advertiser'];
+let orders=['relaseDate','status','deliveryDate']
 
 PurchaseRequestSchema.methods.publicData = function(){
     return {
@@ -34,6 +35,14 @@ PurchaseRequestSchema.statics.isPopulateAllowed=function(populate){
 }
 PurchaseRequestSchema.statics.populateAllowed=function(){
     return  populates;
+}
+
+
+PurchaseRequestSchema.statics.isOrderByAllowed=function(order){
+    return  orders.includes(order);
+}
+PurchaseRequestSchema.statics.orderByAllowed=function(){
+    return  orders;
 }
  
 mongoose.model('Purchase', PurchaseRequestSchema);
