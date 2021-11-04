@@ -41,8 +41,9 @@ const VideogameSchema = new mongoose.Schema({
     collection: 'videogames_col'
 });
 
-let filters=['relaseDate','name','platform','language','category','genre','synopsis'];
+let filters=['relaseDate','name','platform','language','category','genre','synopsis','orderBy','limit'];
 let populates=['platform'];
+let orders=['category','name','releaseDate']
 
 VideogameSchema.methods.publicData = function () {
     return {
@@ -74,5 +75,13 @@ VideogameSchema.statics.populateAllowed=function(){
 VideogameSchema.plugin(uniqueValidator, {
     message: "El videojuego ya existe en nuestra base de datos"
 });
+
+
+VideogameSchema.statics.isOrderByAllowed=function(order){
+    return  orders.includes(order);
+}
+VideogameSchema.statics.orderByAllowed=function(){
+    return  orders;
+}
 
 mongoose.model('Videogame', VideogameSchema);

@@ -5,7 +5,6 @@ const Videogames=mongoose.model('Videogame');
 const Ads=mongoose.model('Ad');
 
 
-
 function requestFilters(query){ 
   const queryResult={}
   const {user,_user,relaseDate,status,deliveryDate}=query
@@ -244,6 +243,113 @@ function populatePurchaseRequest(querys){
 }
 
 
+function orderAd(query){
+  const {orderBy}=query
+  let queryResult={}
+  const regex=/[\[\]']+/g
+  if(orderBy){
+    let typeOrder,order=orderBy.replace(regex,'').split(',')
+    if(order[1]==='asc')
+      typeOrder=1 
+      else if (order[1]==='desc')
+      typeOrder=-1
+    if(order[0]=='price')
+      queryResult.price=typeOrder
+      if(order[0]=='status')
+      queryResult.status=typeOrder
+      if(order[0]=='relaseDate')
+      queryResult.createdAt=typeOrder
+  }
+  console.log('query ',queryResult)
+  return queryResult
+}
+
+function orderPurchase(query){
+  const {orderBy}=query
+  let queryResult={}
+  const regex=/[\[\]']+/g
+  if(orderBy){
+    let typeOrder,order=orderBy.replace(regex,'').split(',')
+    if(order[1]==='asc')
+      typeOrder=1 
+      else if (order[1]==='desc')
+      typeOrder=-1
+    if(order[0]=='relaseDate')
+      queryResult.relaseDate=typeOrder
+      if(order[0]=='deliveryDate')
+      queryResult.deliveryDate=typeOrder
+      if(order[0]=='status')
+      queryResult.status=typeOrder
+  }
+  return queryResult
+}
+
+function orderVideogame(query){
+  const {orderBy}=query
+  let queryResult={}
+  const regex=/[\[\]']+/g
+  if(orderBy){
+    let typeOrder,order=orderBy.replace(regex,'').split(',')
+    if(order[1]==='asc')
+      typeOrder=1 
+      else if (order[1]==='desc')
+      typeOrder=-1
+    if(order[0]=='category')
+      queryResult.ageCategory=typeOrder
+      if(order[0]=='name')
+      queryResult.name=typeOrder
+      if(order[0]=='releaseDate')
+      queryResult.releaseDate=typeOrder
+  }
+  console.log('query ',queryResult)
+  return queryResult
+}
+
+/**
+ * Validate if filter populate has values and return and array values
+ * if hasn't values return empty array
+ * @param  query 
+ * @returns value
+ */
+
+ function validatePopulate(query){
+  let {populate}=query
+  if(populate!==undefined){
+    if(populate.includes('[')&&populate.includes(']')){
+      populate=populate.replace(/[\[\]']+/g,'').split(',')
+      return populate
+    }
+  }
+  return [];
+}
+
+/**
+ * Validate if filter populate has values and return and array values
+ * if hasn't values return empty array
+ * @param  query 
+ * @returns value
+ */
+
+ function validateOrderBy(query){
+  let {orderBy}=query
+  if(orderBy!==undefined){
+    if(orderBy.includes('[')&&orderBy.includes(']')){
+      orderBy=orderBy.replace(/[\[\]']+/g,'').split(',')
+      return orderBy[0]
+    }
+  }
+  return [];
+}
+
+
+function limit(query){
+  const {limit}=query
+  if(limit){
+    return parseInt(limit)
+  }
+  return parseInt('')
+}
+
 
 function typeModel(url){
   let modelUrl
@@ -270,7 +376,12 @@ module.exports={
   videogameFilters,
   typeModel,
   validatePopulate,
+  validateOrderBy,
   populatePurchaseRequest,
   populateVideogame,
-  populateAd
+  populateAd,
+  orderAd,
+  orderPurchase,
+  orderVideogame,
+  limit
 }
