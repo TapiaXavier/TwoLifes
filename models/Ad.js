@@ -21,9 +21,9 @@ AdSchema.methods.publicData = function() {
     }
 }
 
-let filters=['videogame','platform','price','status','advertiser','_advertiser'];
+let filters=['videogame','platform','price','status','advertiser','_advertiser','orderBy','limit'];
 let populates=['videogame','advertiser','platform'];
-
+let orders=['status','price','relaseDate']
 
 AdSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);
@@ -37,6 +37,13 @@ AdSchema.statics.isPopulateAllowed=function(populate){
 }
 AdSchema.statics.populateAllowed=function(){
     return  populates;
+}
+
+AdSchema.statics.isOrderByAllowed=function(order){
+    return  orders.includes(order);
+}
+AdSchema.statics.orderByAllowed=function(){
+    return  orders;
 }
 
 mongoose.model('Ad', AdSchema);
