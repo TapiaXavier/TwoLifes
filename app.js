@@ -28,6 +28,7 @@ require('./models/Ad')
 require('./models/User')
 require('./models/PurchaseRequest')
 require('./models/Videogame')
+require('./models/Platform')
 require('./config/passport')
 
 const swaggerUi = require('swagger-ui-express');
