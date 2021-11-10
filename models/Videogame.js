@@ -57,6 +57,12 @@ VideogameSchema.methods.publicData = function () {
     };
 };
 
+VideogameSchema.methods.getTitle = function () {
+    return{
+        title: this.name,
+        id: this._id
+    }
+}
 
 VideogameSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);
