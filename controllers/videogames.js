@@ -30,6 +30,15 @@ function getVideogame(req, res, next) {
     }
 }
 
+function getTitles(req, res, next) {
+    const titles = []
+
+    Videogame.find().then(videogames => {
+        videogames.forEach(videogame => { titles.push(videogame.getTitle()) })
+        res.send(titles)
+    }).catch(next)
+}
+
 function modifyVideogame(req, res, next) {
 
     Videogame.findById(req.params.id).then(videogame => {
@@ -81,5 +90,6 @@ module.exports = {
     createVideogame,
     getVideogame,
     modifyVideogame,
-    deleteVideogame
+    deleteVideogame,
+    getTitles
 };

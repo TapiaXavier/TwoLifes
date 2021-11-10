@@ -6,10 +6,12 @@ const {
     createVideogame,
     getVideogame,
     modifyVideogame,
-    deleteVideogame
+    deleteVideogame,
+    getTitles
 } = require('../controllers/videogames')
 
 router.get('/',[filters,populate,sort], getVideogame)
+router.get('/titles', getTitles)
 router.get('/:id', getVideogame)
 router.post('/', createVideogame)
 router.put('/:id', modifyVideogame)
