@@ -3,19 +3,20 @@ properties:
   _id:
     type: string
     description: ID de la solicitud
+    example: 61877464e7e0e20016366c6d
   idAd:
     type: string
     description: ID del anuncio
+    example: 61877464e7e0e20016366c6d
   idRequester:
     type: string
     description: ID del solicitante
-  date:
-    type: string
-    description: Fecha de la solicitud
+    example: 61877464e7e0e20016366c6d
   status:
     type: string
     enum: [Aceptada, Rechazada, Pendiente]
     description: Estado de la solicitud
-  dateReceived:
+  deliveryDate:
     type: string
-    description: Fecha en que se recibió el juego
+    description: Fecha en que se recibió el juego (si ya se concretó la venta)
+    example: 2008-10-12T00:00:00.000Z

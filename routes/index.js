@@ -11,7 +11,7 @@ router.use('/',require('./auth'));
 router.use('/users', require('./users'));
 router.use('/videogames', require('./videogames'));
 router.use('/ads', require('./ads'));
-router.use('/purchaserequest', require('./purchaserequest'));
+router.use('/purchaserequests', require('./purchaserequests'));
 router.use('/platforms', require('./platforms'));
 
 // exporting

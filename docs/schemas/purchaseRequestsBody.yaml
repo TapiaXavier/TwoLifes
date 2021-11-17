@@ -1,15 +1,18 @@
 type: object
+required:
+  - idAd
+  - idRequester
+  - status
 properties:
   idAd:
-    type: string
     description: ID del anuncio
+    type: string
+    example: 61877464e7e0e20016366c6d
   idRequester:
-    type: string
     description: ID del solicitante
-  date:
     type: string
-    description: Fecha de la solicitud
+    example: 61877464e7e0e20016366c6d
   status:
+    description: Estado de la solicitud (al crear una solicitud, el status siempre debe ser "En espera")
     type: string
-    enum: [Aceptada, Rechazada, Pendiente]
-    description: Estado de la solicitud
+    default: En espera
