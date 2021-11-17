@@ -131,11 +131,11 @@ paths:
         - Videojuegos
       summary: Crear un nuevo videojuego.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/VideogamesBody'
-        required: true
       responses:
         '200':
           description: (OK) El videojuego fue creado exitosamente.
@@ -153,6 +153,73 @@ paths:
       tags:
         - Videojuegos
       summary: Obtener todos los videojuegos.
+      parameters:
+        - name: releaseDate
+          in: query
+          description: Filtro por fecha de lanzamiento
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Búsqueda por nombre del videojuego
+          required: false
+          schema:
+            type: string
+        - name: platform
+          in: query
+          description: Filtro por ID de plataforma
+          required: false
+          schema:
+            type: string
+        - name: language
+          in: query
+          description: Filtro por idiomas
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: category
+          in: query
+          description: Filtro por categorías de edad
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - A - (Todo publico)
+                - B - ( + 12 Años)
+                - B15 - (+ 15 Años)
+                - C - (Adultos +18)
+                - D - (Extremo y contenido adulto)
+        - name: genre
+          in: query
+          description: Filtro por géneros
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: synopsis
+          in: query
+          description: Búsqueda por sinopsis
+          required: false
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: ID del usuario
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Límite de resultados
+          required: false
+          schema:
+            type: integer
       responses:
         '200':
           description: (OK) Un array de videojuegos.
@@ -350,7 +417,7 @@ paths:
       tags:
         - Solicitudes
       summary: Crear una nueva solicitud.
-      requesBody:
+      requestBody:
         content:
           application/json:
             schema:
@@ -468,6 +535,12 @@ components:
   schemas:
     UsersBody:
       type: object
+      required:
+        - username
+        - firstname
+        - lastname
+        - email
+        - password
       properties:
         username:
           type: string
@@ -484,12 +557,9 @@ components:
         password:
           type: string
           description: Contraseña del usuario.
-        type:
+        profile_pic:
           type: string
-          enum:
-            - buyer
-            - seller
-          description: Tipo de usuario.
+          description: URL de la imagen de perfil del usuario
     UsersPublicData:
       type: object
       properties:
@@ -508,21 +578,36 @@ components:
         email:
           type: string
           description: Correo electrónico del usuario.
+        profile_pic:
+          type: string
+          description: URL de la imagen de perfil del usuario
     VideogamesBody:
       type: object
+      required:
+        - name
       properties:
-        genre:
-          type: string
-          description: Género del videojuego.
-        languages:
-          type: string
-          description: Lenguajes disponibles del videojuego.
         name:
           type: string
           description: Nombre del videojuego.
+        genre:
+          type: array
+          description: Género(s) del videojuego.
+          items:
+            type: string
         ageCategory:
           type: string
-          description: Clasificasión de edad del videojuego.
+          enum:
+            - A - (Todo publico)
+            - B - ( + 12 Años)
+            - B15 - (+ 15 Años)
+            - C - (Adultos +18)
+            - D - (Extremo y contenido adulto)
+          description: Clasificación de edad del videojuego.
+        languages:
+          type: array
+          description: Lenguajes disponibles del videojuego.
+          items:
+            type: string
         releaseDate:
           type: string
           description: Fecha de lanzamiento del videojuego.
@@ -539,17 +624,22 @@ components:
           type: string
           description: ID del videojuego.
         genre:
-          type: string
-          description: Género del videojuego.
+          type: array
+          description: Género(s) del videojuego.
+          example: Plataformas
+          items:
+            type: string
         languages:
-          type: string
+          type: array
           description: Lenguajes disponibles del videojuego.
+          items:
+            type: string
         name:
           type: string
           description: Nombre del videojuego.
         ageCategory:
           type: string
-          description: Clasificasión de edad del videojuego.
+          description: Clasificación de edad del videojuego.
         releaseDate:
           type: string
           description: Fecha de lanzamiento del videojuego.
@@ -557,8 +647,10 @@ components:
           type: string
           description: Sinopsis del videojuego.
         platforms:
-          type: string
-          description: Plataformas en que está disponible.
+          type: array
+          description: Plataformas en que está disponible el videojuego.
+          items:
+            type: string
     AdsBody:
       type: object
       properties:
@@ -621,7 +713,7 @@ components:
           description: ID del solicitante
         date:
           type: string
-          description: null
+          description: Fecha de la solicitud
         status:
           type: string
           enum:
@@ -643,7 +735,7 @@ components:
           description: ID del solicitante
         date:
           type: string
-          description: null
+          description: Fecha de la solicitud
         status:
           type: string
           enum:
