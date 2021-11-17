@@ -337,8 +337,10 @@ function orderVideogame(query){
       orderBy=orderBy.replace(/[\[\]']+/g,'').split(',')
       return orderBy[0]
     }
+  }else if(orderBy===undefined){
+    return undefined
   }
-  return [];
+  return false
 }
 
 

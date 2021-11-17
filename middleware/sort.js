@@ -6,6 +6,7 @@ module.exports=(req,res,next)=>{
     let band=[];  
       if(Object.keys(req.query).length!==0){
         const model= typeModel(req.originalUrl)
+        if(validateOrderBy(req.query)!==undefined)
          band.push(model.isOrderByAllowed(validateOrderBy(req.query)));
         if(!band.includes(false)){
           return next()
