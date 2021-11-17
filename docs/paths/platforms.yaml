@@ -1,0 +1,41 @@
+post:
+  tags:
+  - Plataformas
+  summary: Crear una nueva plataforma.
+  requestBody:
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/platformsPostBody.yaml
+    required: true
+  responses:
+    200:
+      description: (OK) La plataforma fue creado exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/platformsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+get:
+  tags:
+  - Plataformas
+  summary: Obtener todas las plataformas de la base de datos.
+  responses:
+    200: 
+      description: (OK) Array de plataformas.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/platformsArray.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

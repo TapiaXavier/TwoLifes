@@ -1,0 +1,70 @@
+get:
+  tags:
+    - Plataformas
+  summary: Obtener una plataforma.
+  parameters:
+  - name: id
+    in: path
+    description: ID de la plataforma.
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Plataforma encontrada.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/platformsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+put:
+  tags:
+    - Plataformas
+  summary: Modificar una plataforma.
+  parameters:
+  - name: id
+    in: path
+    description: ID del anuncio.
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      description: (OK) Datos actualizados exitosamente.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/platformsPublicData.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError
+
+delete:
+  tags:
+    - Plataformas
+  summary: Eliminar una plataforma.
+  parameters:
+  - name: id
+    in: path
+    description: ID de la plataforma.
+    required: true
+    schema:
+      type: string
+  responses:
+    200: 
+      $ref: ../responses.yaml#/OK
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

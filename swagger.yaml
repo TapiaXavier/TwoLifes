@@ -14,6 +14,8 @@ tags:
     description: Endpoint para manejar la información relacionada a anuncios de venta.
   - name: Solicitudes
     description: Endpoint para manejar la información relacionada a solicitudes.
+  - name: Plataformas
+    description: Endpoint para manejar la información relacionada a plataformas.
 paths:
   /users:
     post:
@@ -526,6 +528,118 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
+  /platforms:
+    post:
+      tags:
+        - Plataformas
+      summary: Crear una nueva plataforma.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformsPostBody'
+        required: true
+      responses:
+        '200':
+          description: (OK) La plataforma fue creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags:
+        - Plataformas
+      summary: Obtener todas las plataformas de la base de datos.
+      responses:
+        '200':
+          description: (OK) Array de plataformas.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/platforms/{id}':
+    get:
+      tags:
+        - Plataformas
+      summary: Obtener una plataforma.
+      parameters:
+        - name: id
+          in: path
+          description: ID de la plataforma.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: (OK) Plataforma encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+        - Plataformas
+      summary: Modificar una plataforma.
+      parameters:
+        - name: id
+          in: path
+          description: ID del anuncio.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: (OK) Datos actualizados exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Plataformas
+      summary: Eliminar una plataforma.
+      parameters:
+        - name: id
+          in: path
+          description: ID de la plataforma.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
 components:
   responses:
     OK:
@@ -818,3 +932,23 @@ components:
         dateReceived:
           type: string
           description: Fecha en que se recibió el juego
+    PlatformsPostBody:
+      type: object
+      required:
+        - platform
+      properties:
+        platform:
+          description: Nombre de la plataforma
+          type: string
+          example: Wii
+    PlatformsPublicData:
+      type: object
+      properties:
+        _id:
+          description: ID de la plataforma
+          type: string
+          example: 61877464e7e0e20016366c6d
+        platform:
+          description: Nombre de la plataforma
+          type: string
+          example: Wii
