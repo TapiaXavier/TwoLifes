@@ -7,7 +7,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../schemas/videogamesBody.yaml
+          $ref: ../schemas/videogamesPostBody.yaml
   responses:
     200: 
       description: (OK) El videojuego fue creado exitosamente.
@@ -99,7 +99,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../schemas/videogamesPublicData.yaml
+            $ref: ../schemas/videogamesArray.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:

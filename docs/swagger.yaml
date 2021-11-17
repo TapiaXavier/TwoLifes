@@ -53,8 +53,8 @@ components:
     UsersPublicData:
       $ref: ./schemas/usersPublicData.yaml
           
-    VideogamesBody:
-      $ref: ./schemas/videogamesBody.yaml
+    VideogamesPostBody:
+      $ref: ./schemas/videogamesPostBody.yaml
         
     VideogamesPublicData:
       $ref: ./schemas/videogamesPublicData.yaml

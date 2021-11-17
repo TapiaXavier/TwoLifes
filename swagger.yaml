@@ -137,7 +137,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VideogamesBody'
+              $ref: '#/components/schemas/VideogamesPostBody'
       responses:
         '200':
           description: (OK) El videojuego fue creado exitosamente.
@@ -228,7 +228,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VideogamesPublicData'
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideogamesPublicData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -595,7 +597,7 @@ components:
           description: URL de la imagen de perfil del usuario
           type: string
           example: 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
-    VideogamesBody:
+    VideogamesPostBody:
       type: object
       required:
         - name
