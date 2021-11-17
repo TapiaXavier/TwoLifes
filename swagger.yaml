@@ -437,6 +437,7 @@ paths:
           required: true
           schema:
             type: string
+          example: 614a3ee7c15d4b6b76fbbb41
       responses:
         '200':
           description: (OK) Anuncio encontrado.
@@ -461,6 +462,7 @@ paths:
           required: true
           schema:
             type: string
+          example: 614a3ee7c15d4b6b76fbbb41
       responses:
         '200':
           description: (OK) Datos actualizados exitosamente.
@@ -485,6 +487,7 @@ paths:
           required: true
           schema:
             type: string
+            example: 614a3ee7c15d4b6b76fbbb41
       responses:
         '200':
           $ref: '#/components/responses/OK'

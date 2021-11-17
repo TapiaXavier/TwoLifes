@@ -99,7 +99,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../schemas/videogamesArray.yaml
+            type: array
+            items:
+              $ref: ../schemas/videogamesPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:

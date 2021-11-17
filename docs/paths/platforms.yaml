@@ -32,7 +32,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../schemas/platformsArray.yaml
+            type: array
+            items:
+              $ref: ../schemas/platformsPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
