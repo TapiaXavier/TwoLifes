@@ -360,62 +360,65 @@ paths:
           in: query
           type: string
           description: Filtrar por id videojuego
-          example: videogame=d464fyde35686
+          example: 614a3ca88bc336e13e99f861
           required: false
         - name: advertiser
           in: query
           type: string
           description: Filtrar por id del anunciante
-          example: advertiser=d464fyde35686
+          example: 614a3e3d8bc336e13e99f863
           required: false
         - name: _advertiser
           in: query
           type: string
-          description: Filtrar todos los anuncios que no le pertenencen al id de anunciante
-          example: _advertiser=d464fyde35686
+          description: Filtrar todos los anuncios que no le pertenencen al usuario loggeado
+          example: 614a3e3d30c336e13e99f863
           required: false
         - name: platform
           in: query
           type: string
-          description: Filtrar por id de  platforma
-          example: platform=d464fyde35686
+          description: Filtrar por id de platforma
+          example: 614a3cea8bc336e13e99f862
           required: false
         - name: price
           in: query
           type: string
-          description: Filtrar por precio de anuncio
-          example: 'price=[23 (mayor o igual a 23), price=23] (menor o igual a 23), price=[23,70] (entre 23 y 70)'
+          description: 'Filtrar por precio del anuncio (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
+          example: '[50'
           required: false
         - name: status
           in: query
           type: string
-          description: Filtrar por status de anuncio
-          example: status=En venta
+          description: Filtrar por status del anuncio
+          example: En venta
           required: false
         - name: populate
           in: query
+          description: Traer la informacion de la colección indicada (puede recibir uno o mas parámetros videogame/advertiser/platform)
           type: string
-          description: Hacer join / Traer informacion de foreign key del valor de parametro (puede recibir uno o mas parametros entre corchetes y separados por coma)
-          example: 'populate=[videogame,advertiser,platform]'
+          example: '[videogame,advertiser,platform]'
           required: false
         - name: orderBy
           in: query
-          type: string
-          description: 'Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )'
-          example: 'orderBy=[price,asc] orderBy=[price,desc]'
-          required: false
-        - - name: limit
-            in: query
-            description: traer cierto numero de registros
-            example: limit=50
+          description: 'Ordenar registros (orderBy=[price/createdAt,asc/desc]). Si se aplica alguno de los filtros anteriores, este es requerido'
+          schema:
             type: string
+          example: '[price,asc]'
+          required: true
+        - name: limit
+          in: query
+          description: Traer cierto numero de registros
+          example: 50
+          type: number
       responses:
         '200':
           description: (OK) Array de anuncios.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AdsPublicData'
+                type: array
+                items:
+                  $ref: '#/components/schemas/AdsPublicData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -976,55 +979,109 @@ components:
             example: super mario bros
     AdsBody:
       type: object
+      required:
+        - idAdvertiser
+        - idVideogame
+        - idPlatform
+        - price
+        - condition
+        - description
+        - status
+        - mainImgURL
       properties:
         idAdvertiser:
           type: string
           description: ID del anunciante
+          example: 614a3e3d8bc336e13e99f863
         idVideogame:
           type: string
           description: ID del videojuego
+          example: 614a3e3d8bc336e13e99f863
         idPlatform:
           type: string
           description: ID de la plataforma
+          example: 614a3e3d8bc336e13e99f863
         price:
           type: number
           description: Precio del videojuego
+          example: 420
+        condition:
+          type: string
+          enum:
+            - Nuevo
+            - Usado
+          example: Usado
         description:
           type: string
           description: Descripción del videojuego
+          example: Un juego de puzzles muy divertido
         status:
           type: string
-          enum:
-            - En venta
-            - Vendido
+          default: En venta
           description: Estado del anuncio
+        mainImgURL:
+          type: string
+          description: URL de la imagen principal en cloudinary
+          example: 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
+        optionalImgsURL:
+          type: array
+          items:
+            type: string
+          example: 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
+          description: Array de URLs de las imágenes extras en cloudinary
     AdsPublicData:
       type: object
       properties:
         _id:
           type: string
           description: ID del anuncio
+          example: 614a3e3d8bc336e13e99f863
         idAdvertiser:
           type: string
           description: ID del anunciante
+          example: 614a3e3d8bc336e13e99f863
         idVideogame:
           type: string
           description: ID del videojuego
+          example: 614a3e3d8bc336e13e99f863
         idPlatform:
           type: string
           description: ID de la plataforma
+          example: 614a3e3d8bc336e13e99f863
         price:
           type: number
           description: Precio del videojuego
+          example: 420
+        condition:
+          type: string
+          enum:
+            - Nuevo
+            - Usado
+          description: Condición del videojuego
+          example: Usado
         description:
           type: string
           description: Descripción del videojuego
+          example: El mejor juego de plataformas
         status:
           type: string
           enum:
             - En venta
             - Vendido
           description: Estado del anuncio
+          example: En venta
+        mainImgURL:
+          type: string
+          description: URL de la imagen principal en cloudinary
+          example: 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
+        optionalImgsURL:
+          type: array
+          items:
+            type: string
+          example:
+            - 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
+            - 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
+          description: Array de URLs de las imágenes extras en cloudinary
     PurchaseRequestsBody:
       type: object
       required:
