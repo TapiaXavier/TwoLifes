@@ -308,6 +308,24 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
+  /videogames/titles:
+    get:
+      tags:
+        - Videojuegos
+      summary: Obtener los títulos y IDs de los videojuegos.
+      responses:
+        '200':
+          description: (OK) Videojuegos encontrados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideogamesTitles'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
   /ads:
     post:
       tags:
@@ -837,6 +855,19 @@ components:
           example:
             - Wii
             - Wii U
+    VideogamesTitles:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            description: ID del videojuego
+            type: string
+            example: 615212fc1fda0032b8e7d457
+          title:
+            description: Nombre del videojuego
+            type: string
+            example: super mario bros
     AdsBody:
       type: object
       properties:

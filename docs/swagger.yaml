@@ -32,6 +32,9 @@ paths:
   /videogames/{id}:
     $ref: ./paths/videogame.yaml
 
+  /videogames/titles:
+    $ref: ./paths/videogamesTitles.yaml
+
   /ads:
     $ref: ./paths/ads.yaml
 
@@ -66,6 +69,9 @@ components:
         
     VideogamesPublicData:
       $ref: ./schemas/videogamesPublicData.yaml
+    
+    VideogamesTitles:
+      $ref: ./schemas/videogamesTitles.yaml
 
     AdsBody:
       $ref: ./schemas/adsBody.yaml
