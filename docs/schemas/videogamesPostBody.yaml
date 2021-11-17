@@ -1,9 +1,7 @@
 type: object
+required:
+  - name
 properties:
-  _id:
-    type: string
-    description: ID del videojuego.
-    example: 615212fc1fda0032b8e7d457
   name:
     description: Nombre del videojuego.
     type: string
@@ -13,10 +11,27 @@ properties:
     type: array
     items:
       type: string
+      enum:
+        - Sala de juegos y plataformas
+        - Deporte
+        - Simulación
+        - Juegos de rompecabezas y mentales
+        - Disparos
+        - Carreras
+        - General
+        - Educativo
+        - Acción y aventura
+        - Terror
     example: [Deporte, Simulación]
   ageCategory:
     description: Clasificación de edad del videojuego.
     type: string
+    enum:
+      - A - (Todo publico)
+      - B - ( + 12 Años)
+      - B15 - (+ 15 Años)
+      - C - (Adultos +18)
+      - D - (Extremo y contenido adulto)
     example: A - (Todo publico)
   languages:
     description: Lenguajes disponibles del videojuego.
@@ -37,4 +52,21 @@ properties:
     type: array
     items:
       type: string
+      enum:
+        - Xbox 360
+        - Wii
+        - Playstation 2
+        - Nintendo DS
+        - Playstation 3
+        - Xbox One
+        - Playstation 4
+        - Xbox
+        - Playstation
+        - PSP
+        - Nintendo 3DS
+        - Wii U
+        - Nintendo Switch
+        - Dreamcast
+        - PS Vita
+        - Nintendo Gamecube
     example: [Wii, Wii U]

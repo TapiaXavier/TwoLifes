@@ -10,40 +10,36 @@ const VideogameSchema = new mongoose.Schema({
     },
     genre: {
         type: [String],
-        required: true
     },
     ageCategory: {
         type: String,
         enum: ['A - (Todo publico)', 'B - ( + 12 Años)',
             'B15 - (+ 15 Años)', 'C - (Adultos +18)',
-            'D - (Extremo y contenido adulto)'
+            'D - (Extremo y contenido adulto)', ''
         ],
-        required: true
     },
     languages: {
         type: [String],
-        required: true
     },
     releaseDate: {
         type: Date,
-        required: true
     },
     synopsis: {
         type: String,
-        required: true
     },
     platforms: {
         type: [String],
-        required: true
     }
 }, {
     timestamps: true,
     collection: 'videogames_col'
 });
 
-let filters=['relaseDate','name','platform','language','category','genre','synopsis','orderBy','limit'];
+let filters=['releaseDate','name','platform','language','category','genre','synopsis','orderBy','limit'];
 let populates=['platform'];
 let orders=['category','name','releaseDate']
+
+// mongoose.Schema.Types.String.checkRequired(v => v != null);
 
 VideogameSchema.methods.publicData = function () {
     return {
@@ -66,7 +62,7 @@ VideogameSchema.methods.getTitle = function () {
 
 VideogameSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);
-  }
+}
 VideogameSchema.statics.filtersAllowed=function(){
     return  filters;
 }

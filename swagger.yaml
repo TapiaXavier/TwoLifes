@@ -14,6 +14,8 @@ tags:
     description: Endpoint para manejar la información relacionada a anuncios de venta.
   - name: Solicitudes
     description: Endpoint para manejar la información relacionada a solicitudes.
+  - name: Plataformas
+    description: Endpoint para manejar la información relacionada a plataformas.
 paths:
   /users:
     post:
@@ -24,7 +26,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UsersBody'
+              $ref: '#/components/schemas/UsersPostBody'
         required: true
       responses:
         '200':
@@ -32,7 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsersBody'
+                $ref: '#/components/schemas/UsersPublicData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -49,7 +51,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UsersPublicData'
+                type: array
+                items:
+                  $ref: '#/components/schemas/UsersPublicData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -131,11 +135,11 @@ paths:
         - Videojuegos
       summary: Crear un nuevo videojuego.
       requestBody:
+        required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/VideogamesBody'
-        required: true
+              $ref: '#/components/schemas/VideogamesPostBody'
       responses:
         '200':
           description: (OK) El videojuego fue creado exitosamente.
@@ -153,13 +157,82 @@ paths:
       tags:
         - Videojuegos
       summary: Obtener todos los videojuegos.
+      parameters:
+        - name: releaseDate
+          in: query
+          description: Filtro por fecha de lanzamiento
+          required: false
+          schema:
+            type: string
+        - name: name
+          in: query
+          description: Búsqueda por nombre del videojuego
+          required: false
+          schema:
+            type: string
+        - name: platform
+          in: query
+          description: Filtro por ID de plataforma
+          required: false
+          schema:
+            type: string
+        - name: language
+          in: query
+          description: Filtro por idiomas
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: category
+          in: query
+          description: Filtro por categorías de edad
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - A - (Todo publico)
+                - B - ( + 12 Años)
+                - B15 - (+ 15 Años)
+                - C - (Adultos +18)
+                - D - (Extremo y contenido adulto)
+        - name: genre
+          in: query
+          description: Filtro por géneros
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+        - name: synopsis
+          in: query
+          description: Búsqueda por sinopsis
+          required: false
+          schema:
+            type: string
+        - name: orderBy
+          in: query
+          description: ID del usuario
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description: Límite de resultados
+          required: false
+          schema:
+            type: integer
       responses:
         '200':
           description: (OK) Un array de videojuegos.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VideogamesPublicData'
+                type: array
+                items:
+                  $ref: '#/components/schemas/VideogamesPublicData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -229,6 +302,24 @@ paths:
       responses:
         '200':
           $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  /videogames/titles:
+    get:
+      tags:
+        - Videojuegos
+      summary: Obtener los títulos y IDs de los videojuegos.
+      responses:
+        '200':
+          description: (OK) Videojuegos encontrados.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VideogamesTitles'
         '400':
           $ref: '#/components/responses/BadRequest'
         '404':
@@ -350,7 +441,7 @@ paths:
       tags:
         - Solicitudes
       summary: Crear una nueva solicitud.
-      requesBody:
+      requestBody:
         content:
           application/json:
             schema:
@@ -455,6 +546,118 @@ paths:
           $ref: '#/components/responses/NotFound'
         '500':
           $ref: '#/components/responses/ServerError'
+  /platforms:
+    post:
+      tags:
+        - Plataformas
+      summary: Crear una nueva plataforma.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlatformsPostBody'
+        required: true
+      responses:
+        '200':
+          description: (OK) La plataforma fue creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    get:
+      tags:
+        - Plataformas
+      summary: Obtener todas las plataformas de la base de datos.
+      responses:
+        '200':
+          description: (OK) Array de plataformas.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+  '/platforms/{id}':
+    get:
+      tags:
+        - Plataformas
+      summary: Obtener una plataforma.
+      parameters:
+        - name: id
+          in: path
+          description: ID de la plataforma.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: (OK) Plataforma encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    put:
+      tags:
+        - Plataformas
+      summary: Modificar una plataforma.
+      parameters:
+        - name: id
+          in: path
+          description: ID del anuncio.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: (OK) Datos actualizados exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformsPublicData'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
+    delete:
+      tags:
+        - Plataformas
+      summary: Eliminar una plataforma.
+      parameters:
+        - name: id
+          in: path
+          description: ID de la plataforma.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/OK'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/ServerError'
 components:
   responses:
     OK:
@@ -466,99 +669,205 @@ components:
     ServerError:
       description: (ServerError) Error en el servidor.
   schemas:
-    UsersBody:
+    UsersPostBody:
       type: object
+      required:
+        - username
+        - firstname
+        - lastname
+        - email
+        - password
       properties:
         username:
-          type: string
           description: Nombre de usuario.
+          type: string
+          example: fulanit0
         firstname:
-          type: string
           description: Nombre del usuario.
+          type: string
+          example: Fulano
         lastname:
-          type: string
           description: Apellido del usuario.
+          type: string
+          example: de Tal
         email:
-          type: string
           description: Correo electrónico del usuario.
+          type: string
+          example: fulano@email.com
         password:
-          type: string
           description: Contraseña del usuario.
-        type:
           type: string
-          enum:
-            - buyer
-            - seller
-          description: Tipo de usuario.
+          example: adohf9384tla
+        profile_pic:
+          description: URL de la imagen de perfil del usuario
+          type: string
+          example: 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
     UsersPublicData:
       type: object
       properties:
         _id:
-          type: string
           description: ID del usuario.
+          type: string
+          example: 61520646ae73563db061bb36
         username:
+          description: Nombre de usuario.
           type: string
-          description: Username del usuario.
+          example: fulanit0
         firstname:
-          type: string
           description: Nombre del usuario.
+          type: string
+          example: Fulano
         lastname:
-          type: string
           description: Apellido del usuario.
+          type: string
+          example: de Tal
         email:
-          type: string
           description: Correo electrónico del usuario.
-    VideogamesBody:
+          type: string
+          example: fulano@email.com
+        profile_pic:
+          description: URL de la imagen de perfil del usuario
+          type: string
+          example: 'https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg'
+    VideogamesPostBody:
       type: object
+      required:
+        - name
       properties:
-        genre:
-          type: string
-          description: Género del videojuego.
-        languages:
-          type: string
-          description: Lenguajes disponibles del videojuego.
         name:
-          type: string
           description: Nombre del videojuego.
+          type: string
+          example: Wii Sports
+        genre:
+          description: Género(s) del videojuego.
+          type: array
+          items:
+            type: string
+            enum:
+              - Sala de juegos y plataformas
+              - Deporte
+              - Simulación
+              - Juegos de rompecabezas y mentales
+              - Disparos
+              - Carreras
+              - General
+              - Educativo
+              - Acción y aventura
+              - Terror
+          example:
+            - Deporte
+            - Simulación
         ageCategory:
+          description: Clasificación de edad del videojuego.
           type: string
-          description: Clasificasión de edad del videojuego.
+          enum:
+            - A - (Todo publico)
+            - B - ( + 12 Años)
+            - B15 - (+ 15 Años)
+            - C - (Adultos +18)
+            - D - (Extremo y contenido adulto)
+          example: A - (Todo publico)
+        languages:
+          description: Lenguajes disponibles del videojuego.
+          type: array
+          items:
+            type: string
+          example:
+            - Español
+            - Inglés
         releaseDate:
-          type: string
           description: Fecha de lanzamiento del videojuego.
+          type: string
+          example: 2008-10-12T00:00:00.000Z
         synopsis:
           type: string
           description: Sinopsis del videojuego.
+          example: Disfruta de una variedad de deportes desde la comodidad de tu casa.
         platforms:
-          type: string
-          description: Plataformas en que está disponible.
+          description: Plataformas en que está disponible el videojuego.
+          type: array
+          items:
+            type: string
+            enum:
+              - Xbox 360
+              - Wii
+              - Playstation 2
+              - Nintendo DS
+              - Playstation 3
+              - Xbox One
+              - Playstation 4
+              - Xbox
+              - Playstation
+              - PSP
+              - Nintendo 3DS
+              - Wii U
+              - Nintendo Switch
+              - Dreamcast
+              - PS Vita
+              - Nintendo Gamecube
+          example:
+            - Wii
+            - Wii U
     VideogamesPublicData:
       type: object
       properties:
         _id:
           type: string
           description: ID del videojuego.
-        genre:
-          type: string
-          description: Género del videojuego.
-        languages:
-          type: string
-          description: Lenguajes disponibles del videojuego.
+          example: 615212fc1fda0032b8e7d457
         name:
-          type: string
           description: Nombre del videojuego.
+          type: string
+          example: Wii Sports
+        genre:
+          description: Género(s) del videojuego.
+          type: array
+          items:
+            type: string
+          example:
+            - Deporte
+            - Simulación
         ageCategory:
+          description: Clasificación de edad del videojuego.
           type: string
-          description: Clasificasión de edad del videojuego.
+          example: A - (Todo publico)
+        languages:
+          description: Lenguajes disponibles del videojuego.
+          type: array
+          items:
+            type: string
+          example:
+            - Español
+            - Inglés
         releaseDate:
-          type: string
           description: Fecha de lanzamiento del videojuego.
+          type: string
+          example: 2008-10-12T00:00:00.000Z
         synopsis:
           type: string
           description: Sinopsis del videojuego.
+          example: Disfruta de una variedad de deportes desde la comodidad de tu casa.
         platforms:
-          type: string
-          description: Plataformas en que está disponible.
+          description: Plataformas en que está disponible el videojuego.
+          type: array
+          items:
+            type: string
+          example:
+            - Wii
+            - Wii U
+    VideogamesTitles:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            description: ID del videojuego
+            type: string
+            example: 615212fc1fda0032b8e7d457
+          title:
+            description: Nombre del videojuego
+            type: string
+            example: super mario bros
     AdsBody:
       type: object
       properties:
@@ -621,7 +930,7 @@ components:
           description: ID del solicitante
         date:
           type: string
-          description: null
+          description: Fecha de la solicitud
         status:
           type: string
           enum:
@@ -643,7 +952,7 @@ components:
           description: ID del solicitante
         date:
           type: string
-          description: null
+          description: Fecha de la solicitud
         status:
           type: string
           enum:
@@ -654,3 +963,23 @@ components:
         dateReceived:
           type: string
           description: Fecha en que se recibió el juego
+    PlatformsPostBody:
+      type: object
+      required:
+        - platform
+      properties:
+        platform:
+          description: Nombre de la plataforma
+          type: string
+          example: Wii
+    PlatformsPublicData:
+      type: object
+      properties:
+        _id:
+          description: ID de la plataforma
+          type: string
+          example: 61877464e7e0e20016366c6d
+        platform:
+          description: Nombre de la plataforma
+          type: string
+          example: Wii

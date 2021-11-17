@@ -1,20 +1,20 @@
 post:
   tags:
-  - Usuarios
-  summary: Crear un nuevo usuario.
+  - Plataformas
+  summary: Crear una nueva plataforma.
   requestBody:
     content:
       application/json:
         schema:
-          $ref: ../schemas/usersPostBody.yaml
+          $ref: ../schemas/platformsPostBody.yaml
     required: true
   responses:
     200:
-      description: (OK) El usuario fue creado exitosamente.
+      description: (OK) La plataforma fue creado exitosamente.
       content:
         application/json:
           schema:
-            $ref: ../schemas/usersPublicData.yaml
+            $ref: ../schemas/platformsPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
@@ -24,15 +24,15 @@ post:
 
 get:
   tags:
-  - Usuarios
-  summary: Obtener todos los usuarios.
+  - Plataformas
+  summary: Obtener todas las plataformas de la base de datos.
   responses:
-    200:
-      description: (OK) Un array de usuarios.
+    200: 
+      description: (OK) Array de plataformas.
       content:
         application/json:
           schema:
-            $ref: ../schemas/usersArray.yaml
+            $ref: ../schemas/platformsArray.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:

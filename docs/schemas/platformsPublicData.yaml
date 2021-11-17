@@ -1,0 +1,10 @@
+type: object
+properties:
+  _id:
+    description: ID de la plataforma
+    type: string
+    example: 61877464e7e0e20016366c6d
+  platform:
+    description: Nombre de la plataforma
+    type: string
+    example: Wii
