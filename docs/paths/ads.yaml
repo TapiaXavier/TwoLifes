@@ -26,6 +26,56 @@ get:
   tags:
   - Anuncios
   summary: Obtener todos los anuncios de la base de datos.
+  parameters:
+    - name: videogame
+      in: query
+      type: string
+      description: Filtrar por id videojuego
+      example: videogame=d464fyde35686
+      required: false
+    - name: advertiser
+      in: query
+      type: string
+      description: Filtrar por id del anunciante 
+      example: advertiser=d464fyde35686
+      required: false
+    - name: _advertiser
+      in: query
+      type: string
+      description: Filtrar todos los anuncios que no le pertenencen al id de anunciante  
+      example: _advertiser=d464fyde35686
+      required: false
+    - name: platform
+      in: query
+      type: string
+      description: Filtrar por id de  platforma
+      example: platform=d464fyde35686
+      required: false 
+    - name: price
+      in: query
+      type: string
+      description: Filtrar por precio de anuncio
+      example: price=[23 (mayor o igual a 23), price=23] (menor o igual a 23), price=[23,70] (entre 23 y 70)
+      required: false  
+    - name: status
+      in: query
+      type: string
+      description: Filtrar por status de anuncio
+      example: status=En venta 
+      required: false
+    - name: populate   
+      in: query
+      type: string
+      description: Hacer join / Traer informacion de foreign key del valor de parametro (puede recibir uno o mas parametros entre corchetes y separados por coma)
+      example: populate=[videogame,advertiser,platform] 
+      required: false
+    - name: orderBy
+      in: query
+      type: string
+      description: Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )
+      example: orderBy=[price,asc] orderBy=[price,desc]
+      required: false
+    - $ref: ../filters/filters.yaml#/OrderBy
   responses:
     200: 
       description: (OK) Array de anuncios.

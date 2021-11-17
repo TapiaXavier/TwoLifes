@@ -26,6 +26,56 @@ get:
   tags:
   - Solicitudes
   summary: Obtener todas las solicitudes.
+   parameters:
+    - name: advertiser
+      in: query
+      type: string
+      description: Filtrar por id de anuncio
+      example: advertiser=d464fyde35686
+      required: false
+    - name: user
+      in: query
+      type: string
+      description: Filtrar por id del usuario  
+      example: user=d464fyde35686
+      required: false
+    - name: _user
+      in: query
+      type: string
+      description: Filtrar todos las solicitudes que no le pertenencen al id del usuario  
+      example: _user=d464fyde35686
+      required: false
+    - name: deliveryDate
+      in: query
+      type: string
+      description: Filtrar por deliveryDate de la solicitud
+      example: deliveryDate=[23-12-2014 (mayor o igual a 23-12-2014), deliveryDate=23-12-2014] (menor o igual a 23-12-2014), deliveryDate=[23-12-2014,30-06-2015] (entre 23-12-2014 y 30-06-2015)
+      required: false  
+    - name: relaseDate
+      in: query
+      type: string
+      description: Filtrar por deliveryDate de la solicitud
+      example: relaseDate=[23-12-2014 (mayor o igual a 23-12-2014), relaseDate=23-12-2014] (menor o igual a 23-12-2014), relaseDate=[23-12-2014,30-06-2015] (entre 23-12-2014 y 30-06-2015)
+      required: false    
+    - name: status
+      in: query
+      type: string
+      description: Filtrar por status de anuncio
+      example: status=Aceptada 
+      required: false
+    - name: populate   
+      in: query
+      type: string
+      description: Hacer join / Traer informacion de foreign key del valor de parametro (puede recibir uno o mas parametros entre corchetes y separados por coma)
+      example: populate=[user,advertiser] 
+      required: false
+    - name: orderBy
+      in: query
+      type: string
+      description: Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )
+      example: orderBy=[relaseDate,asc] orderBy=[relaseDate,desc]
+      required: false
+    - $ref: ../filters/filters.yaml#/OrderBy
   responses:
     200:
       description: (OK) Array de solicitudes.

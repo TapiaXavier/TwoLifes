@@ -1,0 +1,6 @@
+OrderBy:
+- name: limit
+  in: query
+  description: traer cierto numero de registros
+  example: limit=50
+  type: string
