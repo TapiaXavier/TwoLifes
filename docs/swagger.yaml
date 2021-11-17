@@ -47,8 +47,8 @@ components:
     $ref: ./responses.yaml
   
   schemas:
-    UsersBody:
-      $ref: ./schemas/usersBody.yaml
+    UsersPostBody:
+      $ref: ./schemas/usersPostBody.yaml
     
     UsersPublicData:
       $ref: ./schemas/usersPublicData.yaml

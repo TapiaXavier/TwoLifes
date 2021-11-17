@@ -6,7 +6,7 @@ post:
     content:
       application/json:
         schema:
-          $ref: ../schemas/usersBody.yaml
+          $ref: ../schemas/usersPostBody.yaml
     required: true
   responses:
     200:
@@ -14,7 +14,7 @@ post:
       content:
         application/json:
           schema:
-            $ref: ../schemas/usersBody.yaml
+            $ref: ../schemas/usersPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
@@ -32,7 +32,7 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../schemas/usersPublicData.yaml
+            $ref: ../schemas/usersArray.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
