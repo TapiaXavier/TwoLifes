@@ -26,54 +26,51 @@ get:
   tags:
   - Solicitudes
   summary: Obtener todas las solicitudes.
-   parameters:
-    - name: advertiser
+  parameters:
+    - name: ad
       in: query
       type: string
       description: Filtrar por id de anuncio
-      example: advertiser=d464fyde35686
+      example: 614e49d025f7c2aec834fd81
       required: false
     - name: user
       in: query
       type: string
-      description: Filtrar por id del usuario  
-      example: user=d464fyde35686
-      required: false
-    - name: _user
-      in: query
-      type: string
-      description: Filtrar todos las solicitudes que no le pertenencen al id del usuario  
-      example: _user=d464fyde35686
+      description: Filtrar por ID del usuario ("Mis solicitudes")
+      example: 614e2140de8d8a97ef00b022
       required: false
     - name: deliveryDate
       in: query
-      type: string
       description: Filtrar por deliveryDate de la solicitud
-      example: deliveryDate=[23-12-2014 (mayor o igual a 23-12-2014), deliveryDate=23-12-2014] (menor o igual a 23-12-2014), deliveryDate=[23-12-2014,30-06-2015] (entre 23-12-2014 y 30-06-2015)
+      schema:
+        anyOf:
+          - type: string
+            pattern: '^=\[\d{2}-\d{2}-\d{4}$'
+          - type: string
+            pattern: '^=\d{2}-\d{2}-\d{4}\]$'
+          - type: string
+            pattern: '^=\[\d{2}-\d{2}-\d{4},\d{2}-\d{2}-\d{4}\]$'
+      example: deliveryDate=[23-12-2014
       required: false  
-    - name: relaseDate
-      in: query
-      type: string
-      description: Filtrar por deliveryDate de la solicitud
-      example: relaseDate=[23-12-2014 (mayor o igual a 23-12-2014), relaseDate=23-12-2014] (menor o igual a 23-12-2014), relaseDate=[23-12-2014,30-06-2015] (entre 23-12-2014 y 30-06-2015)
-      required: false    
     - name: status
       in: query
       type: string
-      description: Filtrar por status de anuncio
-      example: status=Aceptada 
+      description: Filtrar por status de la solicitud
+      example: Aceptada 
       required: false
     - name: populate   
       in: query
       type: string
       description: Hacer join / Traer informacion de foreign key del valor de parametro (puede recibir uno o mas parametros entre corchetes y separados por coma)
-      example: populate=[user,advertiser] 
+      example: [user,advertiser] 
       required: false
     - name: orderBy
       in: query
-      type: string
       description: Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )
-      example: orderBy=[relaseDate,asc] orderBy=[relaseDate,desc]
+      schema:
+        type: string
+        patter: '^orderby=\[(status|deliveryDate),(asc|desc)]$'
+      example: [deliveryDate,asc]
       required: false
     - $ref: ../filters/filters.yaml#/limit
   responses:

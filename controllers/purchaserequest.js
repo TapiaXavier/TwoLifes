@@ -14,7 +14,7 @@ function createPurchase(req, res, next) {
 }
 
 
-//Método para recuperar solicitud by ID
+//Método para recuperar solicitudes
 function getPurchase(req, res, next) {
 
     if(req.params.id){
@@ -33,14 +33,6 @@ function getPurchase(req, res, next) {
        
     }
 }
-
-// Método para obtener solicitudes de un usuario
-function  getPurchaseByUser(req, res, next){
-    Purchase.find({ idUser: req.params.id})
-    .then(requests => res.send(requests))
-    .catch(next)
-}
-
 
 //Método para editar una solicitud
 function editPurchase(req, res, next) {
@@ -76,7 +68,6 @@ function deletePurchase(req, res, next){
 
 module.exports = {
     getPurchase,
-    getPurchaseByUser,
     createPurchase,
     editPurchase,
     deletePurchase

@@ -1,0 +1,17 @@
+get:
+  tags:
+  - Videojuegos
+  summary: Obtener los títulos y IDs de los videojuegos.
+  responses:
+    200: 
+      description: (OK) Videojuegos encontrados.
+      content:
+        application/json:
+          schema:
+            $ref: ../schemas/videogamesTitles.yaml
+    400:
+      $ref: ../responses.yaml#/BadRequest
+    404:
+      $ref: ../responses.yaml#/NotFound
+    500:
+      $ref: ../responses.yaml#/ServerError

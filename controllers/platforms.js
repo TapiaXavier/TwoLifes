@@ -23,7 +23,29 @@ function addPlatform(req, res, next) {
     }).catch(next)
 }
 
+function editPlatform(req, res, next) {
+    Plaform.findById(req.params.id).then(plat => {
+        if (!plat) { return res.sendStatus(401); }
+        let newData = req.body
+
+        if (typeof newData.platform !== 'undefined')
+            plat.platform = newData.platform
+
+        ad.save().then(updatedPlat => {
+            res.status(201).json(updatedPlat)
+        }).catch(next)
+    }).catch(next)
+}
+
+function deletePlatform(req, res, next) {
+    Plaform.findOneAndDelete({ _id: req.params.id })
+        .then(r => res.status(200).send("Plataforma eliminada"))
+        .catch(next)
+}
+
 module.exports = {
     getPlatform,
-    addPlatform
+    addPlatform,
+    editPlatform,
+    deletePlatform
 }

@@ -1,21 +1,49 @@
 type: object
+required:
+  - idAdvertiser
+  - idVideogame
+  - idPlatform
+  - price
+  - condition
+  - description
+  - status
+  - mainImgURL
 properties:
   idAdvertiser:
     type: string
     description: ID del anunciante
+    example: 614a3e3d8bc336e13e99f863
   idVideogame:
     type: string
     description: ID del videojuego
+    example: 614a3e3d8bc336e13e99f863
   idPlatform:
     type: string
     description: ID de la plataforma
+    example: 614a3e3d8bc336e13e99f863
   price:
     type: number
     description: Precio del videojuego
+    example: 420
+  condition:
+    type: string
+    enum: [Nuevo, Usado]
+    example: Usado
   description:
     type: string
     description: Descripción del videojuego
+    example: Un juego de puzzles muy divertido
   status:
     type: string
-    enum: [En venta, Vendido]
+    default: En venta
     description: Estado del anuncio
+  mainImgURL: 
+    type: string
+    description: URL de la imagen principal en cloudinary
+    example: https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg
+  optionalImgsURL:
+    type: array
+    items:
+      type: string
+    example: https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg
+    description: Array de URLs de las imágenes extras en cloudinary

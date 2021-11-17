@@ -1,27 +1,15 @@
 const mongoose = require('mongoose');
 
 const PurchaseRequestSchema = new mongoose.Schema({
-    idAdvertiser: {type: mongoose.Schema.Types.ObjectId, ref: 'Ad', required: true},
-    idUser: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    relaseDate: {type: Date, required: true},
-    status: {type: String, enum: ['Aceptada', 'En espera', 'Negada']},
+    idAd: {type: mongoose.Schema.Types.ObjectId, ref: 'Ad', required: true},
+    idRequester: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    status: {type: String, enum: ['Aceptada', 'En espera', 'Rechazada'], required: true},
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
-let filters=['relaseDate','deliveryDate','status','advertiser','user','_user','orderBy','limit'];
+let filters=['deliveryDate','status','advertiser','user','_user','orderBy','limit'];
 let populates=['user','advertiser'];
-let orders=['relaseDate','status','deliveryDate']
-
-PurchaseRequestSchema.methods.publicData = function(){
-    return {
-        advertiser: this.idAdvertiser,
-        user: this.idUser,
-        relaseDate: this.relaseDate,
-        status: this.status,
-        deliveryDate: this.deliveryDate
-    }
-    
-}
+let orders=['status','deliveryDate']
 
 PurchaseRequestSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);

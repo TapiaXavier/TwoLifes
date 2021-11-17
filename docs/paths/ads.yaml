@@ -31,50 +31,51 @@ get:
       in: query
       type: string
       description: Filtrar por id videojuego
-      example: videogame=d464fyde35686
+      example: 614a3ca88bc336e13e99f861
       required: false
     - name: advertiser
       in: query
       type: string
       description: Filtrar por id del anunciante 
-      example: advertiser=d464fyde35686
+      example: 614a3e3d8bc336e13e99f863
       required: false
     - name: _advertiser
       in: query
       type: string
-      description: Filtrar todos los anuncios que no le pertenencen al id de anunciante  
-      example: _advertiser=d464fyde35686
+      description: Filtrar todos los anuncios que no le pertenencen al usuario loggeado 
+      example: 614a3e3d30c336e13e99f863
       required: false
     - name: platform
       in: query
       type: string
-      description: Filtrar por id de  platforma
-      example: platform=d464fyde35686
+      description: Filtrar por id de platforma
+      example: 614a3cea8bc336e13e99f862
       required: false 
     - name: price
       in: query
       type: string
-      description: Filtrar por precio de anuncio
-      example: price=[23 (mayor o igual a 23), price=23] (menor o igual a 23), price=[23,70] (entre 23 y 70)
-      required: false  
+      description: Filtrar por precio del anuncio ('[' mayor o igual, ']' menor o igual, '[,]' entre)
+      example: "[50"
+      required: false
     - name: status
       in: query
       type: string
-      description: Filtrar por status de anuncio
-      example: status=En venta 
+      description: Filtrar por status del anuncio
+      example: En venta 
       required: false
     - name: populate   
       in: query
+      description: Traer la informacion de la colección indicada (puede recibir uno o mas parámetros videogame/advertiser/platform)
       type: string
-      description: Hacer join / Traer informacion de foreign key del valor de parametro (puede recibir uno o mas parametros entre corchetes y separados por coma)
-      example: populate=[videogame,advertiser,platform] 
+      example: "[videogame,advertiser,platform]"
       required: false
     - name: orderBy
       in: query
-      type: string
-      description: Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )
-      example: orderBy=[price,asc] orderBy=[price,desc]
-      required: false
+      description: Ordenar registros (orderBy=[price/createdAt,asc/desc]). Si se aplica alguno de los filtros anteriores, este es requerido
+      schema:
+        type: string
+      example: "[price,asc]"
+      required: true
     - $ref: ../filters/filters.yaml#/limit
   responses:
     200: 
@@ -82,7 +83,9 @@ get:
       content:
         application/json:
           schema:
-            $ref: ../schemas/adsPublicData.yaml
+            type: array
+            items:
+              $ref: ../schemas/adsPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:

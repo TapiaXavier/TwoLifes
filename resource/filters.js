@@ -365,7 +365,7 @@ function typeModel(url){
   if(modelUrl==='ads'){
     return Ads
   }
-  if(modelUrl==='purchaserequest'){
+  if(modelUrl==='purchaserequests'){
     return Purchase
   }
   

@@ -5,6 +5,7 @@ info:
   version: 1.0.0
 
 servers:
+- url: http://localhost:4001/v1
 - url: https://twolifes.herokuapp.com/v1
 
 tags:
@@ -16,6 +17,8 @@ tags:
   description: Endpoint para manejar la información relacionada a anuncios de venta.
 - name: Solicitudes
   description: Endpoint para manejar la información relacionada a solicitudes.
+- name: Plataformas
+  description: Endpoint para manejar la información relacionada a plataformas.
 
 paths:
   /users:
@@ -30,34 +33,46 @@ paths:
   /videogames/{id}:
     $ref: ./paths/videogame.yaml
 
+  /videogames/titles:
+    $ref: ./paths/videogamesTitles.yaml
+
   /ads:
     $ref: ./paths/ads.yaml
 
   /ads/{id}:
     $ref: ./paths/ad.yaml
 
-  /purchaseRequests:
+  /purchaserequests:
     $ref: ./paths/purchaseRequests.yaml
   
-  /purchaseRequests/{id}:
+  /purchaserequests/{id}:
     $ref: ./paths/purchaseRequest.yaml
+  
+  /platforms:
+    $ref: ./paths/platforms.yaml
+
+  /platforms/{id}:
+    $ref: ./paths/platform.yaml
 
 components:
   responses:
     $ref: ./responses.yaml
   
   schemas:
-    UsersBody:
-      $ref: ./schemas/usersBody.yaml
+    UsersPostBody:
+      $ref: ./schemas/usersPostBody.yaml
     
     UsersPublicData:
       $ref: ./schemas/usersPublicData.yaml
           
-    VideogamesBody:
-      $ref: ./schemas/videogamesBody.yaml
+    VideogamesPostBody:
+      $ref: ./schemas/videogamesPostBody.yaml
         
     VideogamesPublicData:
       $ref: ./schemas/videogamesPublicData.yaml
+    
+    VideogamesTitles:
+      $ref: ./schemas/videogamesTitles.yaml
 
     AdsBody:
       $ref: ./schemas/adsBody.yaml
@@ -70,3 +85,9 @@ components:
     
     PurchaseRequestsPublicData:
       $ref: ./schemas/purchaseRequestsPublicData.yaml
+    
+    PlatformsPostBody:
+      $ref: ./schemas/platformsPostBody.yaml
+    
+    PlatformsPublicData:
+      $ref: ./schemas/platformsPublicData.yaml

@@ -46,10 +46,7 @@ const secret= require('../config').secret;
       match:[/\S+@\S+.\S+/, "Invalid email"],
       index: true
     },
-    type:{
-      type:String,
-      enum: ['buyer', 'vendor']
-    },
+    profile_pic: String,
     hash: String,
     salt: String
   }, {collection:"users_col", timestamps: true});
@@ -63,7 +60,7 @@ const secret= require('../config').secret;
       firstname: this.firstname,
       lastname: this.lastname,
       email: this.email,
-      type: this.type
+      profile_pic: this.profile_pic 
     }
   }
   

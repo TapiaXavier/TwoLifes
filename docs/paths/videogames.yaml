@@ -3,11 +3,11 @@ post:
   - Videojuegos
   summary: Crear un nuevo videojuego.
   requestBody:
+    required: true
     content:
       application/json:
         schema:
-          $ref: ../schemas/videogamesBody.yaml
-    required: true
+          $ref: ../schemas/videogamesPostBody.yaml
   responses:
     200: 
       description: (OK) El videojuego fue creado exitosamente.
@@ -26,13 +26,82 @@ get:
   tags:
   - Videojuegos
   summary: Obtener todos los videojuegos.
+  parameters:
+    - name: releaseDate
+      in: query
+      description: Filtro por fecha de lanzamiento
+      required: false
+      schema:
+        type: string
+    - name: name
+      in: query
+      description: Búsqueda por nombre del videojuego
+      required: false
+      schema:
+        type: string
+    - name: platform
+      in: query
+      description: Filtro por ID de plataforma
+      required: false
+      schema:
+        type: string
+    - name: language
+      in: query
+      description: Filtro por idiomas
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+    - name: category
+      in: query
+      description: Filtro por categorías de edad
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+          enum:
+            - A - (Todo publico)
+            - B - ( + 12 Años)
+            - B15 - (+ 15 Años)
+            - C - (Adultos +18)
+            - D - (Extremo y contenido adulto)
+    - name: genre
+      in: query
+      description: Filtro por géneros
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+    - name: synopsis
+      in: query
+      description: Búsqueda por sinopsis
+      required: false
+      schema:
+        type: string
+    - name: orderBy
+      in: query
+      description: ID del usuario
+      required: false
+      schema:
+        type: string
+    - name: limit
+      in: query
+      description: Límite de resultados
+      required: false
+      schema:
+        type: integer
   responses:
     200: 
       description: (OK) Un array de videojuegos.
       content:
         application/json:
           schema:
-            $ref: ../schemas/videogamesPublicData.yaml
+            type: array
+            items:
+              $ref: ../schemas/videogamesPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
