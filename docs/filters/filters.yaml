@@ -1,4 +1,4 @@
-OrderBy:
+limit:
 - name: limit
   in: query
   description: traer cierto numero de registros

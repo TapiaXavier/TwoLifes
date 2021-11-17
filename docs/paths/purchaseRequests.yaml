@@ -75,7 +75,7 @@ get:
       description: Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )
       example: orderBy=[relaseDate,asc] orderBy=[relaseDate,desc]
       required: false
-    - $ref: ../filters/filters.yaml#/OrderBy
+    - $ref: ../filters/filters.yaml#/limit
   responses:
     200:
       description: (OK) Array de solicitudes.
