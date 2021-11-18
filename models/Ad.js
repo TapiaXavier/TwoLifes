@@ -12,9 +12,9 @@ const AdSchema = new mongoose.Schema({
     optionalImgsURL:[String]
 }, {timestamps: true, collection: 'ads_col'})
 
-let filters=['videogame','platform','price','status','advertiser','_advertiser','orderBy','limit'];
+let filters=['condition','videogame','platform','price','status','advertiser','_advertiser','sort','limit'];
 let populates=['videogame','advertiser','platform'];
-let orders=['status','price','relaseDate']
+let orders=['status','price']
 
 AdSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);

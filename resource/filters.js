@@ -7,7 +7,7 @@ const Ads=mongoose.model('Ad');
 
 function requestFilters(query){ 
   const queryResult={}
-  const {user,_user,relaseDate,status,deliveryDate}=query
+  const {user,_user,requestDate,status,deliveryDate}=query
   const regexDate=/[\[\]']+/g
   if(user!==undefined){
     queryResult.idUser=user
@@ -32,17 +32,17 @@ function requestFilters(query){
     }
     
   }
-  if(relaseDate!==undefined){
-    let date=relaseDate.replace(regexDate,'').split(',')
-    if(relaseDate.includes('[')&&relaseDate.includes(']')){
+  if(requestDate!==undefined){
+    let date=requestDate.replace(regexDate,'').split(',')
+    if(requestDate.includes('[')&&requestDate.includes(']')){
       if(date.length>1)
-        queryResult.relaseDate={$gte:new Date(date[0]),$lte:new Date(date[1])}
+        queryResult.createdAt={$gte:new Date(date[0]),$lte:new Date(date[1])}
       else
-        queryResult.relaseDate={$eq:new Date(date[0])}
-    }else if(relaseDate.includes('[')){
-      queryResult.relaseDate={$gte:new Date(date[0])}
-    }else if(relaseDate.includes(']')){
-      queryResult.relaseDate={$lte:new Date(date[0])}
+        queryResult.createdAt={$eq:new Date(date[0])}
+    }else if(requestDate.includes('[')){
+      queryResult.createdAt={$gte:new Date(date[0])}
+    }else if(requestDate.includes(']')){
+      queryResult.createdAt={$lte:new Date(date[0])}
     }
     
   }
@@ -52,7 +52,7 @@ function requestFilters(query){
 
 function adFilters(query){ 
   const queryResult={}
-  const {adviser,videogame,platform,status,price,advertiser,_advertiser}=query
+  const {condition,videogame,platform,status,price,advertiser,_advertiser}=query
   const regexDate=/[\[\]']+/g
  
   if(advertiser!==undefined){
@@ -69,6 +69,9 @@ function adFilters(query){
   }
   if(status!==undefined){
     queryResult.status=status
+  }
+  if(condition!==undefined){
+    queryResult.condition={$regex:`.*${condition}.*`, $options:'i'}
   }
   if(price!==undefined){
     let cost=price.replace(regexDate,'').split(',')
@@ -243,63 +246,63 @@ function populatePurchaseRequest(querys){
 }
 
 
-function orderAd(query){
-  const {orderBy}=query
+function sortAd(query){
+  const {sortBy}=query
   let queryResult={}
   const regex=/[\[\]']+/g
-  if(orderBy){
-    let typeOrder,order=orderBy.replace(regex,'').split(',')
-    if(order[1]==='asc')
-      typeOrder=1 
-      else if (order[1]==='desc')
-      typeOrder=-1
-    if(order[0]=='price')
-      queryResult.price=typeOrder
-      if(order[0]=='status')
-      queryResult.status=typeOrder
-      if(order[0]=='relaseDate')
-      queryResult.createdAt=typeOrder
+  if(sortBy){
+    let typeSort,sort=sortBy.replace(regex,'').split(',')
+    if(sort[1]==='asc')
+      typeSort=1 
+      else if (sort[1]==='desc')
+      typeSort=-1
+    if(sort[0]=='price')
+      queryResult.price=typeSort
+      if(sort[0]=='status')
+      queryResult.status=typeSort
+      if(sort[0]=='relaseDate')
+      queryResult.createdAt=typeSort
   }
   console.log('query ',queryResult)
   return queryResult
 }
 
-function orderPurchase(query){
-  const {orderBy}=query
+function sortPurchase(query){
+  const {sortBy}=query
   let queryResult={}
   const regex=/[\[\]']+/g
-  if(orderBy){
-    let typeOrder,order=orderBy.replace(regex,'').split(',')
-    if(order[1]==='asc')
-      typeOrder=1 
-      else if (order[1]==='desc')
-      typeOrder=-1
-    if(order[0]=='relaseDate')
-      queryResult.relaseDate=typeOrder
-      if(order[0]=='deliveryDate')
-      queryResult.deliveryDate=typeOrder
-      if(order[0]=='status')
-      queryResult.status=typeOrder
+  if(sortBy){
+    let typeSort,sort=sortBy.replace(regex,'').split(',')
+    if(sort[1]==='asc')
+      typeSort=1 
+      else if (sort[1]==='desc')
+      typeSort=-1
+    if(sort[0]=='relaseDate')
+      queryResult.relaseDate=typeort
+      if(sort[0]=='deliveryDate')
+      queryResult.deliveryDate=typeSort
+      if(sort[0]=='status')
+      queryResult.status=typeSort
   }
   return queryResult
 }
 
-function orderVideogame(query){
-  const {orderBy}=query
+function sortVideogame(query){
+  const {sortBy}=query
   let queryResult={}
   const regex=/[\[\]']+/g
-  if(orderBy){
-    let typeOrder,order=orderBy.replace(regex,'').split(',')
-    if(order[1]==='asc')
-      typeOrder=1 
-      else if (order[1]==='desc')
-      typeOrder=-1
-    if(order[0]=='category')
-      queryResult.ageCategory=typeOrder
-      if(order[0]=='name')
-      queryResult.name=typeOrder
-      if(order[0]=='releaseDate')
-      queryResult.releaseDate=typeOrder
+  if(sort){
+    let typeSort,sort=sortBy.replace(regex,'').split(',')
+    if(sort[1]==='asc')
+      typeSort=1 
+      else if (sort[1]==='desc')
+      typeSort=-1
+    if(sort[0]=='category')
+      queryResult.ageCategory=typeSort
+      if(sort[0]=='name')
+      queryResult.name=typeSort
+      if(sort[0]=='releaseDate')
+      queryResult.releaseDate=typeSort
   }
   console.log('query ',queryResult)
   return queryResult
@@ -330,14 +333,14 @@ function orderVideogame(query){
  * @returns value
  */
 
- function validateOrderBy(query){
-  let {orderBy}=query
-  if(orderBy!==undefined){
-    if(orderBy.includes('[')&&orderBy.includes(']')){
-      orderBy=orderBy.replace(/[\[\]']+/g,'').split(',')
-      return orderBy[0]
+ function validateSort(query){
+  let {sortBy}=query
+  if(sortBy!==undefined){
+    if(sortBy.includes('[')&&sortBy.includes(']')){
+      sortBy=sortBy.replace(/[\[\]']+/g,'').split(',')
+      return sortBy[0]
     }
-  }else if(orderBy===undefined){
+  }else if(sortBy===undefined){
     return undefined
   }
   return false
@@ -378,12 +381,12 @@ module.exports={
   videogameFilters,
   typeModel,
   validatePopulate,
-  validateOrderBy,
+  validateSort,
   populatePurchaseRequest,
   populateVideogame,
   populateAd,
-  orderAd,
-  orderPurchase,
-  orderVideogame,
+  sortAd,
+  sortPurchase,
+  sortVideogame,
   limit
 }

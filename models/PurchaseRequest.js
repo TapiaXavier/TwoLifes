@@ -7,7 +7,7 @@ const PurchaseRequestSchema = new mongoose.Schema({
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
-let filters=['deliveryDate','status','advertiser','user','_user','orderBy','limit'];
+let filters=['requestDate','deliveryDate','status','advertiser','user','_user','sort','limit'];
 let populates=['user','advertiser'];
 let orders=['status','deliveryDate']
 

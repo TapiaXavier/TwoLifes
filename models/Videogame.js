@@ -35,7 +35,7 @@ const VideogameSchema = new mongoose.Schema({
     collection: 'videogames_col'
 });
 
-let filters=['releaseDate','name','platform','language','category','genre','synopsis','orderBy','limit'];
+let filters=['releaseDate','name','platform','language','category','genre','synopsis','sort','limit'];
 let populates=['platform'];
 let orders=['category','name','releaseDate']
 
