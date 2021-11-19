@@ -1,22 +1,21 @@
 get:
   tags:
-    - Anuncios
-  summary: Obtener los datos de un anuncio.
+    - Plataformas
+  summary: Obtener una plataforma.
   parameters:
   - name: id
     in: path
-    description: ID del anuncio
+    description: ID de la plataforma.
     required: true
     schema:
       type: string
-    example: 614a3ee7c15d4b6b76fbbb41
   responses:
     200: 
-      description: (OK) Anuncio encontrado.
+      description: (OK) Plataforma encontrada.
       content:
         application/json:
           schema:
-            $ref: ../schemas/adsPublicData.yaml
+            $ref: ../schemas/platformsPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
@@ -26,23 +25,22 @@ get:
 
 put:
   tags:
-    - Anuncios
-  summary: Modificar los datos de un anuncio.
+    - Plataformas
+  summary: Modificar una plataforma.
   parameters:
   - name: id
     in: path
-    description: ID del anuncio
+    description: ID del anuncio.
     required: true
     schema:
       type: string
-    example: 614a3ee7c15d4b6b76fbbb41
   responses:
     200: 
       description: (OK) Datos actualizados exitosamente.
       content:
         application/json:
           schema:
-            $ref: ../schemas/adsPublicData.yaml
+            $ref: ../schemas/platformsPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:
@@ -52,16 +50,15 @@ put:
 
 delete:
   tags:
-    - Anuncios
-  summary: Eliminar un anuncio.
+    - Plataformas
+  summary: Eliminar una plataforma.
   parameters:
   - name: id
     in: path
-    description: ID del anuncio
+    description: ID de la plataforma.
     required: true
     schema:
       type: string
-      example: 614a3ee7c15d4b6b76fbbb41
   responses:
     200: 
       $ref: ../responses.yaml#/OK

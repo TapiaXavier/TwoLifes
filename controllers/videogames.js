@@ -1,6 +1,6 @@
 const moongose = require('mongoose');
 const Videogame = moongose.model('Videogame');
-const {videogameFilters,populateVideogame,orderVideogame,limit}=require('../resource/filters')
+const {videogameFilters,populateVideogame,sortVideogame,limit}=require('../resource/filters')
 
 function createVideogame(req, res, next) {
 
@@ -22,7 +22,7 @@ function getVideogame(req, res, next) {
     } else {
         Videogame.find(videogameFilters(req.query))
         .limit(limit(req.query))
-        .sort(orderVideogame(req.query))
+        .sort(sortVideogame(req.query))
         .populate(populateVideogame(req.query))
         .then(videogames => {
             res.send(videogames)

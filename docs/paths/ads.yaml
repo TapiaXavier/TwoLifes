@@ -26,13 +26,80 @@ get:
   tags:
   - Anuncios
   summary: Obtener todos los anuncios de la base de datos.
+  parameters:
+    - name: publishDate
+      in: query
+      type: string
+      description: Filtrar por fecha de publicación ('[' mayor o igual, ']' menor o igual, '[,]' entre)
+      example: "[23-12-2014"
+    - name: condition
+      in: query
+      type: string
+      description: Filtrar por condición del videojuego (Nuevo/Usado)
+      example: Nuevo
+      required: false
+    - name: videogame
+      in: query
+      type: string
+      description: Filtrar por id videojuego
+      example: 614a3ca88bc336e13e99f861
+      required: false
+    - name: advertiser
+      in: query
+      type: string
+      description: Filtrar por id del anunciante ("Mis anuncios")
+      example: 614a3e3d8bc336e13e99f863
+      required: false
+    - name: _advertiser
+      in: query
+      type: string
+      description: Filtrar todos los anuncios que no le pertenencen al usuario loggeado 
+      example: 614a3e3d30c336e13e99f863
+      required: false
+    - name: platform
+      in: query
+      type: string
+      description: Filtrar por id de platforma (uno o más)
+      example: "[614a3cea8bc336e13e99f862]"
+      required: false 
+      allowReserved: true
+    - name: price
+      in: query
+      type: string
+      description: Filtrar por precio del anuncio ('[' mayor o igual, ']' menor o igual, '[,]' entre)
+      example: "[50"
+      required: false
+      allowReserved: true
+    - name: status
+      in: query
+      type: string
+      description: Filtrar por status del anuncio (En venta/Vendido)
+      example: En venta
+      required: false
+    - name: populate   
+      in: query
+      description: Traer la informacion de la colección indicada (uno o mas videogame/advertiser/platform)
+      type: string
+      example: "[videogame,advertiser,platform]"
+      required: false
+      allowReserved: true
+    - name: sort
+      in: query
+      description: Ordenar registros (por price/status en orden asc/desc])
+      type: string
+      example: "[price,asc]"
+      allowReserved: true
+      required: false
+    - $ref: ../filters/filters.yaml#/limit
   responses:
     200: 
       description: (OK) Array de anuncios.
       content:
         application/json:
           schema:
-            $ref: ../schemas/adsPublicData.yaml
+            type: array
+            items:
+              $ref: ../schemas/adsPublicData.yaml
     400:
       $ref: ../responses.yaml#/BadRequest
     404:

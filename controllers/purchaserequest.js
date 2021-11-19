@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Purchase = mongoose.model('Purchase');
-const {requestFilters,populatePurchaseRequest,orderPurchase,limit}=require('../resource/filters')
+const {requestFilters,populatePurchaseRequest,sortPurchase,limit}=require('../resource/filters')
 
 //Metodo para crear una solicitud
 function createPurchase(req, res, next) {
@@ -14,7 +14,7 @@ function createPurchase(req, res, next) {
 }
 
 
-//Método para recuperar solicitud by ID
+//Método para recuperar solicitudes
 function getPurchase(req, res, next) {
 
     if(req.params.id){
@@ -25,7 +25,7 @@ function getPurchase(req, res, next) {
        
         Purchase.find(requestFilters(req.query))
         .limit(limit(req.query))
-        .sort(orderPurchase(req.query))
+        .sort(sortPurchase(req.query))
         .populate(populatePurchaseRequest(req.query))
         .then(purchase => {
             res.send(purchase)
@@ -33,14 +33,6 @@ function getPurchase(req, res, next) {
        
     }
 }
-
-// Método para obtener solicitudes de un usuario
-function  getPurchaseByUser(req, res, next){
-    Purchase.find({ idUser: req.params.id})
-    .then(requests => res.send(requests))
-    .catch(next)
-}
-
 
 //Método para editar una solicitud
 function editPurchase(req, res, next) {
@@ -76,7 +68,6 @@ function deletePurchase(req, res, next){
 
 module.exports = {
     getPurchase,
-    getPurchaseByUser,
     createPurchase,
     editPurchase,
     deletePurchase

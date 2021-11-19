@@ -3,22 +3,44 @@ properties:
   _id:
     type: string
     description: ID del anuncio
+    example: 614a3e3d8bc336e13e99f863
   idAdvertiser:
     type: string
     description: ID del anunciante
+    example: 614a3e3d8bc336e13e99f863
   idVideogame:
     type: string
     description: ID del videojuego
+    example: 614a3e3d8bc336e13e99f863
   idPlatform:
     type: string
     description: ID de la plataforma
+    example: 614a3e3d8bc336e13e99f863
   price:
     type: number
     description: Precio del videojuego
+    example: 420
+  condition:
+    type: string
+    enum: [Nuevo, Usado]
+    description: Condición del videojuego
+    example: Usado
   description:
     type: string
     description: Descripción del videojuego
+    example: El mejor juego de plataformas
   status:
     type: string
     enum: [En venta, Vendido]
     description: Estado del anuncio
+    example: En venta
+  mainImgURL: 
+    type: string
+    description: URL de la imagen principal en cloudinary 
+    example: https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg
+  optionalImgsURL:
+    type: array
+    items:
+      type: string
+    example: [https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg, https://res.cloudinary.com/fuvvg3x9s/image/upload/v1637027487/wbuwsj28te0kilztcylk.jpg]
+    description: Array de URLs de las imágenes extras en cloudinary

@@ -1,9 +1,11 @@
 type: object
+required:
+  - username
+  - firstname
+  - lastname
+  - email
+  - password
 properties:
-  _id:
-    description: ID del usuario.
-    type: string
-    example: 61520646ae73563db061bb36
   username:
     description: Nombre de usuario.
     type: string
@@ -20,6 +22,10 @@ properties:
     description: Correo electrónico del usuario.
     type: string
     example: fulano@email.com
+  password:
+    description: Contraseña del usuario.
+    type: string
+    example: adohf9384tla
   profile_pic:
     description: URL de la imagen de perfil del usuario
     type: string

@@ -26,6 +26,66 @@ get:
   tags:
   - Solicitudes
   summary: Obtener todas las solicitudes.
+  parameters:
+    - name: requestDate
+      in: query
+      type: string
+      description: Filtrar por fecha de creación ('[' mayor o igual, ']' menor o igual, '[,]' entre)
+      example: "[23-12-2014"
+      required: false
+      allowReserved: true
+    - name: ad
+      in: query
+      type: string
+      description: Filtrar por id de anuncio
+      example: 614e49d025f7c2aec834fd81
+      required: false
+    - name: advertiser
+      in: query
+      type: string
+      description: Filtrar por id del anunciante
+      example: 614e49d025f7c2aec834fd81
+      required: false
+    - name: user
+      in: query
+      type: string
+      description: Filtrar por ID del usuario ("Mis solicitudes")
+      example: 614e2140de8d8a97ef00b022
+      required: false
+    - name: _user
+      in: query
+      type: string
+      description: Filtrar solicitudes que no pertenezcan al usuario de id proporcionado
+      example: 934e2140fg788d8a97ef00aks942
+    - name: deliveryDate
+      in: query
+      description: Filtrar por deliveryDate de la solicitud ('[' mayor o igual, ']' menor o igual, '[,]' entre)
+      type: string
+      example: "[23-12-2014"
+      required: false
+      allowReserved: true
+    - name: status
+      in: query
+      type: string
+      description: Filtrar por status de la solicitud (Aceptada/Rechazada/En espera)
+      example: Aceptada
+      required: false
+      allowReserved: true
+    - name: populate
+      in: query
+      type: string
+      description: Traer la información de la colección indicada (uno o los dos user/advertiser)
+      example: "[user,advertiser]"
+      required: false
+      allowReserved: true
+    - name: sort
+      in: query
+      description: Ordenar registros (por status/deliveryDate/requestDate en orden asc/desc)
+      type: string
+      example: "[deliveryDate,asc]"
+      required: false
+      allowReserved: true
+    - $ref: ../filters/filters.yaml#/limit
   responses:
     200:
       description: (OK) Array de solicitudes.

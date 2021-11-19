@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Ad = mongoose.model('Ad');
-const {adFilters,populateAd,orderAd,limit}=require('../resource/filters')
+const {adFilters,populateAd,sortAd,limit}=require('../resource/filters')
 
 function createAd(req, res, next) {
     let ad = new Ad(req.body);
@@ -18,7 +18,7 @@ function getAd(req, res, next) {
     } else {
         Ad.find(adFilters(req.query))
         .limit(limit(req.query))
-        .sort(orderAd(req.query))
+        .sort(sortAd(req.query))
         .populate(populateAd(req.query))
             .then(ads => {
                 res.send(ads)

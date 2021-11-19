@@ -1,4 +1,4 @@
-const { typeModel, validateOrderBy } = require('../resource/filters');
+const { typeModel, validateSort } = require('../resource/filters');
 
 
 module.exports=(req,res,next)=>{ 
@@ -6,7 +6,8 @@ module.exports=(req,res,next)=>{
     let band=[];  
       if(Object.keys(req.query).length!==0){
         const model= typeModel(req.originalUrl)
-         band.push(model.isOrderByAllowed(validateOrderBy(req.query)));
+        if(validateSort(req.query)!==undefined)
+         band.push(model.isSortAllowed(validateSort(req.query)));
         if(!band.includes(false)){
           return next()
          }else{
@@ -14,7 +15,7 @@ module.exports=(req,res,next)=>{
              status:"400",
              type:"Bad request",
              msj:"Sort/Order field's its not supported by this endpoint",
-             filters:`Sort/Order fields allowed are: ${model.orderByAllowed().toString()}`
+             filters:`Sort/Order fields allowed are: ${model.sortAllowed().toString()}`
            })
          }
       }else{

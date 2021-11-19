@@ -5,25 +5,16 @@ const AdSchema = new mongoose.Schema({
     idVideogame: {type: mongoose.Schema.Types.ObjectId, ref: 'Videogame', required: true},
     idPlatform: {type: mongoose.Schema.Types.ObjectId, ref: 'Platform', required: true},
     price: {type: Number, min: 0, required: true},
+    condition: {type: String, enum: ['Nuevo', 'Usado']},
     description: {type: String, required: true},
-    status: {type: String, enum: ['En venta', 'Vendido']}
+    status: {type: String, enum: ['En venta', 'Vendido']},
+    mainImgURL: {type: String, required: true},
+    optionalImgsURL:[String]
 }, {timestamps: true, collection: 'ads_col'})
 
-AdSchema.methods.publicData = function() {
-    return {
-        _id: this._id,
-        idAdvertiser: this.idAdvertiser,
-        idVideogame: this.idVideogame,
-        idPlatform: this.idPlatform,
-        price: this.price,
-        description: this.description,
-        status: this.status
-    }
-}
-
-let filters=['videogame','platform','price','status','advertiser','_advertiser','orderBy','limit'];
+let filters=['publishDate','condition','videogame','platform','price','status','advertiser','_advertiser','sort','limit'];
 let populates=['videogame','advertiser','platform'];
-let orders=['status','price','relaseDate']
+let sorts=['status','price','publishDate']
 
 AdSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);
@@ -39,11 +30,11 @@ AdSchema.statics.populateAllowed=function(){
     return  populates;
 }
 
-AdSchema.statics.isOrderByAllowed=function(order){
-    return  orders.includes(order);
+AdSchema.statics.isSortAllowed=function(sort){
+    return  sorts.includes(sort);
 }
-AdSchema.statics.orderByAllowed=function(){
-    return  orders;
+AdSchema.statics.sortAllowed=function(){
+    return  sorts;
 }
 
 mongoose.model('Ad', AdSchema);

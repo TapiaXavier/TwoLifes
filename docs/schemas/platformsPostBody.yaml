@@ -1,0 +1,8 @@
+type: object
+required:
+  - platform
+properties:
+  platform:
+    description: Nombre de la plataforma
+    type: string
+    example: Wii

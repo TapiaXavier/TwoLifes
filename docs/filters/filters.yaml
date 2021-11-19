@@ -1,0 +1,6 @@
+limit:
+  name: limit
+  in: query
+  description: Traer cierto número de registros
+  example: 50
+  type: number

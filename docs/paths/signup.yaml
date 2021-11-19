@@ -1,0 +1,10 @@
+post:
+  tags:
+  - Sign Up
+  summary: Registrar un nuevo usuario
+  requestBody:
+  required: true
+    content:
+      application/json:
+        schema:
+          $ref: ../schemas/signupBody.yaml
