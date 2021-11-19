@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const PurchaseRequestSchema = new mongoose.Schema({
     idAd: {type: mongoose.Schema.Types.ObjectId, ref: 'Ad', required: true},
     idRequester: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    status: {type: String, enum: ['Aceptada', 'En espera', 'Rechazada'], required: true},
+    status: {type: String, enum: ['Aceptada', 'En espera', 'Negada'], required: true},
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
