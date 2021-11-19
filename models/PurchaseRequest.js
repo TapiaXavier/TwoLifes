@@ -9,7 +9,7 @@ const PurchaseRequestSchema = new mongoose.Schema({
 
 let filters=['requestDate','deliveryDate','status','advertiser','user','_user','sort','limit'];
 let populates=['user','advertiser'];
-let orders=['status','deliveryDate']
+let orders=['status','deliveryDate','requestDate']
 
 PurchaseRequestSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);

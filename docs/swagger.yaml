@@ -9,6 +9,10 @@ servers:
 - url: https://twolifes.herokuapp.com/v1
 
 tags:
+- name: Sign Up
+  description: Endpoint para creación de usuarios
+- name: Log In
+  description: Endpoint para inicio de sesión
 - name: Usuarios
   description: Endpoint para manejar la información relacionada a usuarios.
 - name: Videojuegos
@@ -21,6 +25,12 @@ tags:
   description: Endpoint para manejar la información relacionada a plataformas.
 
 paths:
+  /login:
+    $ref: ./paths/login.yaml
+
+  /signup:
+    $ref: ./paths/signup.yaml
+
   /users:
     $ref: ./paths/users.yaml
 
