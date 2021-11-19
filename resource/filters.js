@@ -298,6 +298,8 @@ function sortPurchase(query){
       queryResult.deliveryDate=typeSort
       if(sort[0]=='status')
       queryResult.status=typeSort
+      if(sort[0]=='requestDate')
+      queryResult.status=typeSort
   }
   return queryResult
 }
