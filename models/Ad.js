@@ -12,9 +12,9 @@ const AdSchema = new mongoose.Schema({
     optionalImgsURL:[String]
 }, {timestamps: true, collection: 'ads_col'})
 
-let filters=['condition','videogame','platform','price','status','advertiser','_advertiser','sort','limit'];
+let filters=['publishDate','condition','videogame','platform','price','status','advertiser','_advertiser','sort','limit'];
 let populates=['videogame','advertiser','platform'];
-let orders=['status','price']
+let sorts=['status','price','publishDate']
 
 AdSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);
@@ -30,11 +30,11 @@ AdSchema.statics.populateAllowed=function(){
     return  populates;
 }
 
-AdSchema.statics.isOrderByAllowed=function(order){
-    return  orders.includes(order);
+AdSchema.statics.isSortAllowed=function(sort){
+    return  sorts.includes(sort);
 }
-AdSchema.statics.orderByAllowed=function(){
-    return  orders;
+AdSchema.statics.sortAllowed=function(){
+    return  sorts;
 }
 
 mongoose.model('Ad', AdSchema);

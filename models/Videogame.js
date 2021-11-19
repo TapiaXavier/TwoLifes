@@ -28,7 +28,11 @@ const VideogameSchema = new mongoose.Schema({
         type: String,
     },
     platforms: {
-        type: [String],
+        type: [
+            {type: mongoose.Schema.Types.ObjectId, 
+                ref: 'Platform', 
+                required: true
+            }],
     }
 }, {
     timestamps: true,
@@ -37,7 +41,7 @@ const VideogameSchema = new mongoose.Schema({
 
 let filters=['releaseDate','name','platform','language','category','genre','synopsis','sort','limit'];
 let populates=['platform'];
-let orders=['category','name','releaseDate']
+let sorts=['category','name','releaseDate']
 
 // mongoose.Schema.Types.String.checkRequired(v => v != null);
 
@@ -79,11 +83,11 @@ VideogameSchema.plugin(uniqueValidator, {
 });
 
 
-VideogameSchema.statics.isOrderByAllowed=function(order){
-    return  orders.includes(order);
+VideogameSchema.statics.isSortAllowed=function(sort){
+    return  sorts.includes(sort);
 }
-VideogameSchema.statics.orderByAllowed=function(){
-    return  orders;
+VideogameSchema.statics.sortAllowed=function(){
+    return  sorts;
 }
 
 mongoose.model('Videogame', VideogameSchema);

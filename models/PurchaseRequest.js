@@ -9,7 +9,7 @@ const PurchaseRequestSchema = new mongoose.Schema({
 
 let filters=['requestDate','deliveryDate','status','advertiser','user','_user','sort','limit'];
 let populates=['user','advertiser'];
-let orders=['status','deliveryDate']
+let sorts=['status','deliveryDate']
 
 PurchaseRequestSchema.statics.isFiltersAllowed=function(filter){
     return  filters.includes(filter);
@@ -26,11 +26,11 @@ PurchaseRequestSchema.statics.populateAllowed=function(){
 }
 
 
-PurchaseRequestSchema.statics.isOrderByAllowed=function(order){
-    return  orders.includes(order);
+PurchaseRequestSchema.statics.isSortAllowed=function(sort){
+    return  sorts.includes(sort);
 }
-PurchaseRequestSchema.statics.orderByAllowed=function(){
-    return  orders;
+PurchaseRequestSchema.statics.sortAllowed=function(){
+    return  sorts;
 }
  
 mongoose.model('Purchase', PurchaseRequestSchema);

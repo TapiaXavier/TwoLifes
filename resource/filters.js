@@ -65,13 +65,28 @@ function adFilters(query){
     queryResult.idVideogame=videogame
   }
   if(platform!==undefined){
-    queryResult.idPlatform=platform    
+    let plat=platform.replace(regexDate,'').split(',')
+    queryResult.platforms={$regex:`^${plat}.*`, $options:'i'}    
   }
   if(status!==undefined){
     queryResult.status=status
   }
   if(condition!==undefined){
     queryResult.condition={$regex:`.*${condition}.*`, $options:'i'}
+  }
+  if(publishDate!==undefined){
+    let  date=publishDate.replace(regexDate,'').split(',')
+    if(publishDate.includes('[')&&publishDate.includes(']')){
+      if(date.length>1)
+        queryResult.createdAt={$gte:new Date(date[0]),$lte:new Date(date[1])}
+      else
+        queryResult.createdAt={$eq:new Date(date[0])}
+    }else if(publishDate.includes('[')){
+      queryResult.createdAt={$gte:new Date(date[0])}
+    }else if(publishDate.includes(']')){
+      queryResult.createdAt={$lte:new Date(date[0])}
+    }
+    
   }
   if(price!==undefined){
     let cost=price.replace(regexDate,'').split(',')
@@ -247,7 +262,7 @@ function populatePurchaseRequest(querys){
 
 
 function sortAd(query){
-  const {sortBy}=query
+  const {sort:sortBy}=query
   let queryResult={}
   const regex=/[\[\]']+/g
   if(sortBy){
@@ -258,9 +273,9 @@ function sortAd(query){
       typeSort=-1
     if(sort[0]=='price')
       queryResult.price=typeSort
-      if(sort[0]=='status')
+    if(sort[0]=='status')
       queryResult.status=typeSort
-      if(sort[0]=='relaseDate')
+    if(sort[0]=='publishDate')
       queryResult.createdAt=typeSort
   }
   console.log('query ',queryResult)
@@ -268,7 +283,7 @@ function sortAd(query){
 }
 
 function sortPurchase(query){
-  const {sortBy}=query
+  const {sort:sortBy}=query
   let queryResult={}
   const regex=/[\[\]']+/g
   if(sortBy){
@@ -288,10 +303,10 @@ function sortPurchase(query){
 }
 
 function sortVideogame(query){
-  const {sortBy}=query
+  const {sort:sortBy}=query
   let queryResult={}
   const regex=/[\[\]']+/g
-  if(sort){
+  if(sortBy){
     let typeSort,sort=sortBy.replace(regex,'').split(',')
     if(sort[1]==='asc')
       typeSort=1 
@@ -334,7 +349,7 @@ function sortVideogame(query){
  */
 
  function validateSort(query){
-  let {sortBy}=query
+  let {sort:sortBy}=query
   if(sortBy!==undefined){
     if(sortBy.includes('[')&&sortBy.includes(']')){
       sortBy=sortBy.replace(/[\[\]']+/g,'').split(',')
