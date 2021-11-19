@@ -52,7 +52,7 @@ function requestFilters(query){
 
 function adFilters(query){ 
   const queryResult={}
-  const {condition,videogame,platform,status,price,advertiser,_advertiser}=query
+  const {publishDate,condition,videogame,platform,status,price,advertiser,_advertiser}=query
   const regexDate=/[\[\]']+/g
  
   if(advertiser!==undefined){
