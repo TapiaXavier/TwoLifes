@@ -161,70 +161,57 @@ paths:
       parameters:
         - name: releaseDate
           in: query
-          description: Filtro por fecha de lanzamiento
+          description: 'Filtro por fecha de lanzamiento (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
           required: false
-          schema:
-            type: string
+          type: string
+          example: '[23-12-2014'
+          allowReserved: true
         - name: name
           in: query
           description: Búsqueda por nombre del videojuego
           required: false
-          schema:
-            type: string
+          type: string
+          example: Wii Sports
+          allowReserved: true
         - name: platform
           in: query
-          description: Filtro por ID de plataforma
+          description: Filtro por IDs (uno o más) de plataforma
           required: false
-          schema:
-            type: string
+          type: string
+          example: '[614e2140de8d8a97ef00b022,184e2140de238a97efh77aj3]'
+          allowReserved: true
         - name: language
           in: query
-          description: Filtro por idiomas
+          description: Filtro por idiomas (uno o más)
           required: false
-          schema:
-            type: array
-            items:
-              type: string
+          type: string
+          example: '[Español,Inglés]'
+          allowReserved: true
         - name: category
           in: query
-          description: Filtro por categorías de edad
+          description: 'Filtro por categorías de edad (uno o más A - (Todo publico), B - ( + 12 Años), B15 - (+ 15 Años), C - (Adultos +18), D - (Extremo y contenido adulto))'
           required: false
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - A - (Todo publico)
-                - B - ( + 12 Años)
-                - B15 - (+ 15 Años)
-                - C - (Adultos +18)
-                - D - (Extremo y contenido adulto)
+          type: string
+          example: '[A - (Todo publico),B - ( + 12 Años)]'
+          allowReserved: true
         - name: genre
           in: query
-          description: Filtro por géneros
+          description: 'Filtro por géneros (uno o más Sala de juegos y plataformas, Deporte, Simulación, Juegos de rompecabezas y mentales, Disparos, Carreras, General, Educativo, Acción y aventura, Terror)'
           required: false
-          schema:
-            type: array
-            items:
-              type: string
+          type: string
+          example: '[Deporte,Simulación]'
+          allowReserved: true
         - name: synopsis
           in: query
-          description: Búsqueda por sinopsis
+          description: Búsqueda por sinopsis (palabras clave)
           required: false
-          schema:
-            type: string
-        - name: orderBy
-          in: query
-          description: ID del usuario
-          required: false
-          schema:
-            type: string
+          type: string
         - name: limit
           in: query
           description: Límite de resultados
           required: false
-          schema:
-            type: integer
+          type: integer
+          example: 50
       responses:
         '200':
           description: (OK) Un array de videojuegos.
@@ -398,12 +385,14 @@ paths:
           type: string
           example: '[videogame,advertiser,platform]'
           required: false
-        - name: orderBy
+          allowReserved: true
+        - name: sort
           in: query
           description: 'Ordenar registros (orderBy=[price/createdAt,asc/desc]). Si se aplica alguno de los filtros anteriores, este es requerido'
           schema:
             type: string
           example: '[price,asc]'
+          allowReserved: true
           required: true
         - name: limit
           in: query
@@ -540,41 +529,40 @@ paths:
           required: false
         - name: deliveryDate
           in: query
-          description: Filtrar por deliveryDate de la solicitud
-          schema:
-            anyOf:
-              - type: string
-                pattern: '^=\[\d{2}-\d{2}-\d{4}$'
-              - type: string
-                pattern: '^=\d{2}-\d{2}-\d{4}\]$'
-              - type: string
-                pattern: '^=\[\d{2}-\d{2}-\d{4},\d{2}-\d{2}-\d{4}\]$'
-          example: 'deliveryDate=[23-12-2014'
+          description: 'Filtrar por deliveryDate de la solicitud (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
+          type: string
+          example: '[23-12-2014'
           required: false
+          allowReserved: true
         - name: status
           in: query
           type: string
-          description: Filtrar por status de la solicitud
-          example: Aceptada
+          description: Filtrar por status de la solicitud (uno o más Aceptada/Rechazada/En espera)
+          example: '[Aceptada]'
           required: false
+          allowReserved: true
         - name: populate
           in: query
-          type: string
-          description: Hacer join / Traer informacion de foreign key del valor de parametro (puede recibir uno o mas parametros entre corchetes y separados por coma)
+          description: Traer la información de la colección indicada (uno o los dos user/advertiser)
+          type: array
+          items:
+            type: string
+            enum:
+              - user
+              - advertiser
           example:
             - user
             - advertiser
           required: false
-        - name: orderBy
+          explode: false
+          allowReserved: true
+        - name: sort
           in: query
-          description: 'Ordenar registros (sintaxis orderby=[parametro a ordenar,tipo de orden]  )'
-          schema:
-            type: string
-            patter: '^orderby=\[(status|deliveryDate),(asc|desc)]$'
-          example:
-            - deliveryDate
-            - asc
+          description: Ordenar registros (por status/deliveryDate en orden asc/desc)
+          type: string
+          example: '[deliveryDate,asc]'
           required: false
+          allowReserved: true
         - $ref: '#/paths/~1ads/get/parameters/8'
       responses:
         '200':

@@ -27,6 +27,17 @@ get:
   - Anuncios
   summary: Obtener todos los anuncios de la base de datos.
   parameters:
+    - name: publishDate
+      in: query
+      type: string
+      description: Filtrar por fecha de publicación ('[' mayor o igual, ']' menor o igual, '[,]' entre)
+      example: "[23-12-2014"
+    - name: condition
+      in: query
+      type: string
+      description: Filtrar por condición del videojuego (Nuevo/Usado)
+      example: Nuevo
+      required: false
     - name: videogame
       in: query
       type: string
@@ -36,7 +47,7 @@ get:
     - name: advertiser
       in: query
       type: string
-      description: Filtrar por id del anunciante 
+      description: Filtrar por id del anunciante ("Mis anuncios")
       example: 614a3e3d8bc336e13e99f863
       required: false
     - name: _advertiser
@@ -48,34 +59,37 @@ get:
     - name: platform
       in: query
       type: string
-      description: Filtrar por id de platforma
-      example: 614a3cea8bc336e13e99f862
+      description: Filtrar por id de platforma (uno o más)
+      example: "[614a3cea8bc336e13e99f862]"
       required: false 
+      allowReserved: true
     - name: price
       in: query
       type: string
       description: Filtrar por precio del anuncio ('[' mayor o igual, ']' menor o igual, '[,]' entre)
       example: "[50"
       required: false
+      allowReserved: true
     - name: status
       in: query
       type: string
-      description: Filtrar por status del anuncio
-      example: En venta 
+      description: Filtrar por status del anuncio (En venta/Vendido)
+      example: En venta
       required: false
     - name: populate   
       in: query
-      description: Traer la informacion de la colección indicada (puede recibir uno o mas parámetros videogame/advertiser/platform)
+      description: Traer la informacion de la colección indicada (uno o mas videogame/advertiser/platform)
       type: string
       example: "[videogame,advertiser,platform]"
       required: false
-    - name: orderBy
+      allowReserved: true
+    - name: sort
       in: query
-      description: Ordenar registros (orderBy=[price/createdAt,asc/desc]). Si se aplica alguno de los filtros anteriores, este es requerido
-      schema:
-        type: string
+      description: Ordenar registros (por price/status en orden asc/desc])
+      type: string
       example: "[price,asc]"
-      required: true
+      allowReserved: true
+      required: false
     - $ref: ../filters/filters.yaml#/limit
   responses:
     200: 
