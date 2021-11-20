@@ -3,12 +3,12 @@ const mongoose = require('mongoose');
 const PurchaseRequestSchema = new mongoose.Schema({
     idAd: {type: mongoose.Schema.Types.ObjectId, ref: 'Ad', required: true},
     idRequester: {type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
-    status: {type: String, enum: ['Aceptada', 'En espera', 'Rechazada'], required: true},
+    status: {type: String, enum: ['Aceptada', 'En espera', 'Negada'], required: true},
     deliveryDate: {type: Date}
 }, {timestamps: true, collection: 'purchaserequests_col'} )
 
-let filters=['requestDate','deliveryDate','status','advertiser','user','_user','sort','limit'];
-let populates=['user','advertiser'];
+let filters=['requestDate','deliveryDate','status','ad','requester','_requester','sort','limit'];
+let populates=['requester','ad'];
 let sorts=['status','deliveryDate','requestDate']
 
 PurchaseRequestSchema.statics.isFiltersAllowed=function(filter){

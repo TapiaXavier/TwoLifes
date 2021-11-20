@@ -27,13 +27,12 @@ const VideogameSchema = new mongoose.Schema({
     synopsis: {
         type: String,
     },
-    platforms: {
-        type: [
+    platforms:[ 
             {type: mongoose.Schema.Types.ObjectId, 
                 ref: 'Platform', 
                 required: true
-            }],
-    }
+            }
+    ]
 }, {
     timestamps: true,
     collection: 'videogames_col'

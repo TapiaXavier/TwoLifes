@@ -4,7 +4,7 @@ post:
   summary: Registrar un nuevo usuario
   requestBody:
   required: true
-    content:
-      application/json:
-        schema:
-          $ref: ../schemas/signupBody.yaml
+  content:
+    application/json:
+      schema:
+        $ref: ../schemas/signupBody.yaml

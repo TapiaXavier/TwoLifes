@@ -7,6 +7,10 @@ servers:
   - url: 'http://localhost:4001/v1'
   - url: 'https://twolifes.herokuapp.com/v1'
 tags:
+  - name: Sign Up
+    description: Endpoint para creación de usuarios
+  - name: Log In
+    description: Endpoint para inicio de sesión
   - name: Usuarios
     description: Endpoint para manejar la información relacionada a usuarios.
   - name: Videojuegos
@@ -18,6 +22,58 @@ tags:
   - name: Plataformas
     description: Endpoint para manejar la información relacionada a plataformas.
 paths:
+  /login:
+    get:
+      tags:
+        - Log In
+      summary: Iniciar sesión
+      requestBody: null
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Nombre de usuario
+                example: fulanito
+              password:
+                type: string
+                description: Contraseña del usuario
+                example: a2893eur9q8dkl
+  /signup:
+    post:
+      tags:
+        - Sign Up
+      summary: Registrar un nuevo usuario
+      requestBody: null
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              username:
+                type: string
+                description: Nombre de usuario
+                example: fulanito
+              firstname:
+                type: string
+                description: Nombre del usuario
+                example: José
+              lastname:
+                type: string
+                description: Apellido del usuario
+                example: Pérez
+              email:
+                type: string
+                description: Correo electrónico del usuario
+                example: fulanito@email.com
+              password:
+                type: string
+                description: Contraseña del usuario
+                example: a2893eur9q8dkl
   /users:
     post:
       tags:
@@ -206,12 +262,14 @@ paths:
           description: Búsqueda por sinopsis (palabras clave)
           required: false
           type: string
-        - name: limit
+        - name: sort
           in: query
-          description: Límite de resultados
+          description: Ordenar registros (por category/name/releaseDate en orden asc/desc)
+          type: string
+          example: '[releaseDate,asc]'
           required: false
-          type: integer
-          example: 50
+          allowReserved: true
+        - $ref: '#/paths/~1ads/get/parameters/10'
       responses:
         '200':
           description: (OK) Un array de videojuegos.
@@ -343,6 +401,17 @@ paths:
         - Anuncios
       summary: Obtener todos los anuncios de la base de datos.
       parameters:
+        - name: publishDate
+          in: query
+          type: string
+          description: 'Filtrar por fecha de publicación (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
+          example: '[23-12-2014'
+        - name: condition
+          in: query
+          type: string
+          description: Filtrar por condición del videojuego (Nuevo/Usado)
+          example: Nuevo
+          required: false
         - name: videogame
           in: query
           type: string
@@ -352,7 +421,7 @@ paths:
         - name: advertiser
           in: query
           type: string
-          description: Filtrar por id del anunciante
+          description: Filtrar por id del anunciante ("Mis anuncios")
           example: 614a3e3d8bc336e13e99f863
           required: false
         - name: _advertiser
@@ -364,39 +433,40 @@ paths:
         - name: platform
           in: query
           type: string
-          description: Filtrar por id de platforma
-          example: 614a3cea8bc336e13e99f862
+          description: Filtrar por id de platforma (uno o más)
+          example: '[614a3cea8bc336e13e99f862]'
           required: false
+          allowReserved: true
         - name: price
           in: query
           type: string
           description: 'Filtrar por precio del anuncio (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
           example: '[50'
           required: false
+          allowReserved: true
         - name: status
           in: query
           type: string
-          description: Filtrar por status del anuncio
+          description: Filtrar por status del anuncio (En venta/Vendido)
           example: En venta
           required: false
         - name: populate
           in: query
-          description: Traer la informacion de la colección indicada (puede recibir uno o mas parámetros videogame/advertiser/platform)
+          description: Traer la informacion de la colección indicada (uno o mas videogame/advertiser/platform)
           type: string
           example: '[videogame,advertiser,platform]'
           required: false
           allowReserved: true
         - name: sort
           in: query
-          description: 'Ordenar registros (orderBy=[price/createdAt,asc/desc]). Si se aplica alguno de los filtros anteriores, este es requerido'
-          schema:
-            type: string
+          description: 'Ordenar registros (por price/status en orden asc/desc])'
+          type: string
           example: '[price,asc]'
           allowReserved: true
-          required: true
+          required: false
         - name: limit
           in: query
-          description: Traer cierto numero de registros
+          description: Traer cierto número de registros
           example: 50
           type: number
       responses:
@@ -515,10 +585,23 @@ paths:
         - Solicitudes
       summary: Obtener todas las solicitudes.
       parameters:
+        - name: requestDate
+          in: query
+          type: string
+          description: 'Filtrar por fecha de creación (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
+          example: '[23-12-2014'
+          required: false
+          allowReserved: true
         - name: ad
           in: query
           type: string
           description: Filtrar por id de anuncio
+          example: 614e49d025f7c2aec834fd81
+          required: false
+        - name: advertiser
+          in: query
+          type: string
+          description: Filtrar por id del anunciante
           example: 614e49d025f7c2aec834fd81
           required: false
         - name: user
@@ -527,6 +610,11 @@ paths:
           description: Filtrar por ID del usuario ("Mis solicitudes")
           example: 614e2140de8d8a97ef00b022
           required: false
+        - name: _user
+          in: query
+          type: string
+          description: Filtrar solicitudes que no pertenezcan al usuario de id proporcionado
+          example: 934e2140fg788d8a97ef00aks942
         - name: deliveryDate
           in: query
           description: 'Filtrar por deliveryDate de la solicitud (''['' mayor o igual, '']'' menor o igual, ''[,]'' entre)'
@@ -537,33 +625,25 @@ paths:
         - name: status
           in: query
           type: string
-          description: Filtrar por status de la solicitud (uno o más Aceptada/Rechazada/En espera)
-          example: '[Aceptada]'
+          description: Filtrar por status de la solicitud (Aceptada/Rechazada/En espera)
+          example: Aceptada
           required: false
           allowReserved: true
         - name: populate
           in: query
+          type: string
           description: Traer la información de la colección indicada (uno o los dos user/advertiser)
-          type: array
-          items:
-            type: string
-            enum:
-              - user
-              - advertiser
-          example:
-            - user
-            - advertiser
+          example: '[user,advertiser]'
           required: false
-          explode: false
           allowReserved: true
         - name: sort
           in: query
-          description: Ordenar registros (por status/deliveryDate en orden asc/desc)
+          description: Ordenar registros (por status/deliveryDate/requestDate en orden asc/desc)
           type: string
           example: '[deliveryDate,asc]'
           required: false
           allowReserved: true
-        - $ref: '#/paths/~1ads/get/parameters/8'
+        - $ref: '#/paths/~1ads/get/parameters/10'
       responses:
         '200':
           description: (OK) Array de solicitudes.

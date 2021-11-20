@@ -7,16 +7,19 @@ const Ads=mongoose.model('Ad');
 
 function requestFilters(query){ 
   const queryResult={}
-  const {user,_user,requestDate,status,deliveryDate}=query
+  const {ad,requester,_requester,requestDate,status,deliveryDate}=query
   const regexDate=/[\[\]']+/g
-  if(user!==undefined){
-    queryResult.idUser=user
+  if(requester!==undefined){
+    queryResult.idRequester=requester
   }
-  if(_user!==undefined){
-    queryResult.idUser={$ne:_user}
+  if(_requester!==undefined){
+    queryResult.idRequester={$ne:_requester}
   }
   if(status!==undefined){
     queryResult.status=status
+  }
+  if(ad!==undefined){
+    queryResult.idAd=ad
   }
   if(deliveryDate!==undefined){
       let date=deliveryDate.replace(regexDate,'').split(',')
@@ -65,8 +68,7 @@ function adFilters(query){
     queryResult.idVideogame=videogame
   }
   if(platform!==undefined){
-    let plat=platform.replace(regexDate,'').split(',')
-    queryResult.platforms={$regex:`^${plat}.*`, $options:'i'}    
+    queryResult.idPlatform=platform
   }
   if(status!==undefined){
     queryResult.status=status
@@ -115,8 +117,8 @@ function videogameFilters(query){
     queryResult.name={$regex:`.*${name}.*`, $options:'i'}
   }
   if(platform!==undefined){
-    let plat=platform.replace(regexDate,'').split(',')
-    queryResult.platforms={$regex:`^${plat}.*`, $options:'i'}    
+    let plat =platform.replace(regexDate,'').split(',')
+    queryResult.platforms={$in:plat}   
   }
   if(language!==undefined){
     if(language.includes('[')&&language.includes(']')){
@@ -152,7 +154,7 @@ function videogameFilters(query){
       queryResult.releaseDate={$lte:new Date(date[0])}
     }
     
-  }
+  } 
   return queryResult
 }
 
@@ -205,8 +207,8 @@ function populatePurchaseRequest(querys){
   let fields=validatePopulate(querys)
   let query=[]
   fields.map(field=>{
-    if(field==='user'){
-      query.push({path:'idUser',select:'-hash -salt'})
+    if(field==='requester'){
+      query.push({path:'idRequester',select:'-hash -salt'})
     }
     if(field==='advertiser'){
       query.push({path:'idAdvertiser'})
@@ -230,8 +232,8 @@ function populatePurchaseRequest(querys){
     if(field==='videogame'){
       query.push({path:'idVideogame'})
     }
-    if(field==='advertiser'){
-      query.push({path:'idAdvertiser',select:'-hash -salt'})
+    if(field==='ad'){
+      query.push({path:'idAd',select:'-hash -salt'})
     }
     if(field==='platform'){
       query.push({path:'idPlatform'})
@@ -253,7 +255,7 @@ function populatePurchaseRequest(querys){
   fields.map(field=>{
 
     if(field==='platform'){
-      query.push({path:'idPlatform'})
+      query.push({path:'platforms'})
     }
   })
   
@@ -321,7 +323,6 @@ function sortVideogame(query){
       if(sort[0]=='releaseDate')
       queryResult.releaseDate=typeSort
   }
-  console.log('query ',queryResult)
   return queryResult
 }
 
