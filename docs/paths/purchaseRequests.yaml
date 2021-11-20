@@ -31,7 +31,7 @@ get:
       in: query
       type: string
       description: Filtrar por fecha de creación ('[' mayor o igual, ']' menor o igual, '[,]' entre)
-      example: "[23-12-2014"
+      example: "[2014-12-23"
       required: false
       allowReserved: true
     - name: ad
@@ -61,7 +61,7 @@ get:
       in: query
       description: Filtrar por deliveryDate de la solicitud ('[' mayor o igual, ']' menor o igual, '[,]' entre)
       type: string
-      example: "[23-12-2014"
+      example: "[2014-12-23"
       required: false
       allowReserved: true
     - name: status
@@ -80,7 +80,7 @@ get:
       allowReserved: true
     - name: sort
       in: query
-      description: Ordenar registros (por status/deliveryDate/requestDate en orden asc/desc)
+      description: Ordenar registros por status/deliveryDate/requestDate en orden asc/desc (por defecto es asc)
       type: string
       example: "[deliveryDate,asc]"
       required: false

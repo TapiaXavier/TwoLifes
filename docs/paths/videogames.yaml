@@ -32,7 +32,7 @@ get:
       description: Filtro por fecha de lanzamiento ('[' mayor o igual, ']' menor o igual, '[,]' entre)
       required: false
       type: string
-      example: "[23-12-2014"
+      example: "[2014-12-23"
       allowReserved: true
     - name: name
       in: query
@@ -53,14 +53,14 @@ get:
       description: Filtro por idiomas (uno o más)
       required: false
       type: string
-      example: "[Español,Inglés]"
+      example: "[Spanish,English]"
       allowReserved: true
     - name: category
       in: query
-      description: Filtro por categorías de edad (uno o más A - (Todo publico), B - ( + 12 Años), B15 - (+ 15 Años), C - (Adultos +18), D - (Extremo y contenido adulto))
+      description: Filtro por categorías de edad (uno o más A, B, B15, C)
       required: false
       type: string
-      example: "[A - (Todo publico),B - ( + 12 Años)]"
+      example: "[A,B]"
       allowReserved: true
     - name: genre
       in: query
@@ -76,7 +76,7 @@ get:
       type: string
     - name: sort
       in: query
-      description: Ordenar registros (por category/name/releaseDate en orden asc/desc)
+      description: Ordenar registros por category/name/releaseDate en orden asc/desc (por defecto es asc)
       type: string
       example: "[releaseDate,asc]"
       required: false
