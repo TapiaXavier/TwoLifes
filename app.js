@@ -9,14 +9,16 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require('body-parser')
 
-app.use(cors({
-    origin: '*'
-}));
+var multer = require('multer');
+var upload = multer();
+
+app.use(cors());
 
 app.use(bodyParser.urlencoded({
     extended: false
 }))
 app.use(bodyParser.json())
+app.use(upload.array())
 
 mongoose.connect(process.env.MONGODB_URI, { 
     useUnifiedTopology: true,
