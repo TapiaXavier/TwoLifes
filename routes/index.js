@@ -13,6 +13,7 @@ router.use('/videogames', require('./videogames'));
 router.use('/ads', require('./ads'));
 router.use('/purchaserequests', require('./purchaserequests'));
 router.use('/platforms', require('./platforms'));
+router.use('/images', require('./images'));
 
 // exporting
 module.exports = router;
