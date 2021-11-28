@@ -6,7 +6,7 @@ function createAd(req, res, next) {
     let ad = new Ad(req.body);
 
     ad.save().then(newAd => {
-        res.status(200).send(newAd.publicData())
+        res.status(200).send(newAd)
     }).catch(next)
 }
 
