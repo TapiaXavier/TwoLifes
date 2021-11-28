@@ -121,3 +121,4 @@ dist
 
 config.js
 env.sh
+.vscode
