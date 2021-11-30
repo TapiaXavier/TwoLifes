@@ -13,8 +13,9 @@ function createAd(req, res, next) {
 function getAd(req, res, next) {
     if (req.params.id) {
         Ad.findById(req.params.id)
-            .then(ad => res.send(ad))
-            .catch(next)
+          .populate(populateAd(req.query))
+          .then(ad => res.send(ad))
+          .catch(next)
     } else {
         Ad.find(adFilters(req.query))
         .limit(limit(req.query))

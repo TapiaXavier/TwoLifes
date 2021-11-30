@@ -15,7 +15,9 @@ function createVideogame(req, res, next) {
 function getVideogame(req, res, next) {
 
     if (req.params.id) {
-        Videogame.findById(req.params.id).then(videogame => {
+        Videogame.findById(req.params.id)
+        .populate(populateVideogame(req.query))
+        .then(videogame => {
             res.send(videogame)
         }).catch(next)
 
