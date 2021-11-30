@@ -18,7 +18,9 @@ function createPurchase(req, res, next) {
 function getPurchase(req, res, next) {
 
     if(req.params.id){
-        Purchase.findById(req.params.id).then(purchase => {
+        Purchase.findById(req.params.id)
+        .populate(populatePurchaseRequest(req.query))
+        .then(purchase => {
             res.send(purchase)
         }).catch(next)
     } else {
